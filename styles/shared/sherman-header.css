@@ -1,0 +1,152 @@
+.sherman-header {
+  background-color: rgb(0, 0, 0);
+  color: white;
+  padding-left: 15px;
+  padding-right: 15px;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  position: relative;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 68px;
+
+  z-index: 3;
+}
+
+.sherman-header-left-section {
+  width: 180px;
+}
+
+@media (max-width: 800px) {
+  .sherman-header-left-section {
+    width: unset;
+  }
+}
+
+.header-link {
+  display: inline-block;
+  padding: 6px;
+  border-radius: 2px;
+  cursor: pointer;
+  text-decoration: none;
+  margin-right: 5px;
+  border: 1px solid rgba(0, 0, 0, 0);
+}
+
+.header-link:hover {
+  border: 1px solid white;
+}
+
+.sherman-logo {
+  width: 100px;
+  margin-top: 5px;
+}
+
+.sherman-mobile-logo {
+  display: none;
+}
+
+@media (max-width: 575px) {
+  .sherman-logo {
+    display: none;
+  }
+
+  .sherman-mobile-logo {
+    display: block;
+    height: 35px;
+    margin-top: 5px;
+  }
+}
+
+.sherman-header-middle-section {
+  flex: 1;
+  max-width: 850px;
+  margin-left: 10px;
+  margin-right: 10px;
+  display: flex;
+}
+
+.search-bar {
+  flex: 1;
+  width: 0;
+  font-size: 16px;
+  height: 38px;
+  padding-left: 15px;
+  border: none;
+  border-top-left-radius: 15px;
+  border-bottom-left-radius: 15px;
+  border-top-right-radius: 0;
+  border-bottom-right-radius: 0;
+}
+
+.search-button {
+  background-color: rgb(3, 233, 157);
+  border: none;
+  width: 45px;
+  height: 40px;
+  border-top-right-radius: 15px;
+  border-bottom-right-radius: 15px;
+  flex-shrink: 0;
+}
+
+.search-icon {
+  height: 22px;
+  margin-left: 2px;
+  margin-top: 3px;
+}
+
+.sherman-header-right-section {
+  width: 180px;
+  flex-shrink: 0;
+  display: flex;
+  justify-content: end;
+}
+
+.orders-link {
+  color: white;
+}
+
+.returns-text {
+  display: block;
+  font-size: 13px;
+}
+
+.orders-text {
+  display: block;
+  font-size: 16px;
+  font-weight: 700;
+}
+
+.list-link {
+  color: white;
+  display: flex;
+  align-items: topline;
+  position: relative;
+}
+
+.list-icon {
+  width: 54px;
+}
+
+.list-text {
+  margin-top: 19px;
+  font-size: 15px;
+  font-weight: 700;
+}
+
+.list-quantity {
+  color: rgb(1, 188, 221);
+  font-size: 20px;
+  font-weight: 700;
+
+  position: absolute;
+  top: 22px;
+  left: 8px;
+  
+  width: 50px;
+  text-align: center;
+}

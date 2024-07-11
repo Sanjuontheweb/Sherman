@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Sherman</title>
+
+    <!-- This code is needed for responsive design to work.
+      (Responsive design = make the website look good on
+      smaller screen sizes like a phone or a tablet). -->
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- Load a font called Roboto from Google Fonts. -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Ubuntu:ital,wght@0,300;0,400;0,500;0,700;1,300;1,400;1,500;1,700&display=swap" rel="stylesheet">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400..700;1,400..700&family=Nunito+Sans:ital,opsz,wght@0,6..12,
+    200..1000;1,6..12,200..1000&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,
+    500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300..800;1,300..800&display=swap" rel="stylesheet">
+
+    <!-- Here are the CSS files for this page. -->
+    <link rel="stylesheet" href="styles/shared/general.css">
+    <link rel="stylesheet" href="styles/shared/sherman-header.css">
+    <link rel="stylesheet" href="styles/pages/sherman.css">
+  </head>
+  <body>
+    <div class="sherman-header">
+      <div class="sherman-header-left-section">
+        <a href="sherman.html" class="header-link">
+          <img class="sherman-logo"
+            src="images/sherman-logo-white.png">
+          <img class="sherman-mobile-logo"
+            src="images/sherman-mobile-logo-white.png">
+        </a>
+      </div>
+
+      <div class="sherman-header-middle-section">
+        <input class="search-bar" type="text" placeholder="Search">
+
+        <button class="search-button">
+          <img class="search-icon" src="images/icons/search-icon.png">
+        </button>
+      </div>
+
+      <div class="sherman-header-right-section">
+        <a class="orders-link header-link" href="orders.html">
+          <span class="returns-text">Returns &</span>
+          <span class="orders-text">Orders</span>
+        </a>
+
+        <a class="list-link header-link" href="checkout.html">
+          <img class="list-icon" src="images/icons/list-icon.png">
+          <div class="list-quantity js-list-quantity">0</div>
+          <div class="list-text">Check</div>
+        </a>
+      </div>
+    </div>
+
+    <div class = "sherman-down-header">
+    </div>
+
+    <div class = "slideshow-container">
+      <div class = "slide slide-image-1">
+        <img src = "images/slideshow/1.jpg" alt = "">
+      </div>
+      <div class = "slide slide-image-2">
+        <img src = "images/slideshow/2.jpg" alt = "">
+      </div>
+      <div class = "slide slide-image-3">
+        <img src = "images/slideshow/3.jpg" alt = "">
+      </div>
+      <div class = "slide slide-image-4">
+        <img src = "images/slideshow/4.jpg" alt = "">
+      </div>
+      <div class = "slide slide-image-5">
+        <img src = "images/slideshow/5.jpg" alt = "">
+      </div>
+    </div>
+
+    <div class = "header-text">Products you might like | 15% off on every product</div>
+    
+    <div class="main">
+      <div class="products-grid js-products-grid">
+      </div>
+    </div>
+
+    <script type = "module" src = "scripts/sherman.js"></script>
+  </body>
+</html>
