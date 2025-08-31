@@ -20,7 +20,6 @@ export function renderOrders() {
 
   const paymentSummaryies = renderPaymentSummary();
   const total = paymentSummaryies.total;
-  console.log(total);
 
 orders.forEach((order) => {
 
