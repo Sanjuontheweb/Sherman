@@ -1,5 +1,5 @@
 import {list, addToList} from "./lists.js";
-const {products} = require("./products.js");
+import { products } from "./products.js"
 
 let productHTML = '';
 

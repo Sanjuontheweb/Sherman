@@ -1,12 +1,13 @@
 const express = require("express")
 const app = express()
 const path = require("path")
-let { products } = require("./public/javascripts/products")
+const productRouter = require("./routes/product")
 
 app.set("view engine", 'ejs')
 app.use(express.json())
 app.use(express.urlencoded({ extended: true }))
 app.use(express.static(path.join(__dirname, "public")))
+
 
 app.get('/', (req, res) => {
     res.render('sherman')
@@ -27,14 +28,13 @@ app.get('/checkout', (req, res) => {
     res.render(('checkout'))
 })
 
-app.get('/api/products', (req, res) => {
-    res.status(200).json({ products })
-})
+//api routes
+app.use('/api', productRouter)
 
-app.listen(4231)
+app.listen(4731)
 
-// make a api route projucts which returns products json
 // make the ui stylish
 // create users, and auth route with jwt
 // try orders now
 // role based access
+// product page
