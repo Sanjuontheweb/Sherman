@@ -1,0 +1,282 @@
+:root {
+  --font-display: "Anton", "Arial Narrow", sans-serif;
+  --font-body: "Inter", Arial, sans-serif;
+  --font-serif: "Fraunces", Georgia, serif;
+}
+
+/* ---------------------------------------------------------
+   THEME TOKENS
+   Light = tones of #f7e7ce.  Dark = tones of #2a050b.
+   Follows the visitor's system setting; the toggle button
+   sets data-theme="light" or "dark" on <html> to override.
+   --------------------------------------------------------- */
+:root {
+  --bg: #f7e7ce;
+  --surface: #fffaf1;
+  --header-bg: #f7e7ce;
+  --ink: #1c1210;
+  --muted: #6b5c50;
+  --line: #1c1210;
+
+  --accent: #c8432e;
+  --on-accent: #f7e7ce;
+  --icon-filter: brightness(0);
+
+  /* Product cards read as a fixed dark, editorial surface in
+     both themes, so they hold their contrast either way. */
+  --card-bg: #1c1210;
+  --card-ink: #f3e9db;
+  --card-muted: #b6a99a;
+  --card-line: #3a2c26;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #180307;
+    --surface: #22060c;
+    --header-bg: #180307;
+    --ink: #f3e6d8;
+    --muted: #b79c8c;
+    --line: #f3e6d8;
+
+    --accent: #ff7a5c;
+    --on-accent: #180307;
+    --icon-filter: brightness(0) invert(1);
+
+    --card-bg: #f3e6d8;
+    --card-ink: #1c1210;
+    --card-muted: #6b5c50;
+    --card-line: #d9c8b5;
+  }
+}
+
+:root[data-theme="dark"] {
+  --bg: #180307;
+  --surface: #22060c;
+  --header-bg: #180307;
+  --ink: #f3e6d8;
+  --muted: #b79c8c;
+  --line: #f3e6d8;
+
+  --accent: #ff7a5c;
+  --on-accent: #180307;
+  --icon-filter: brightness(0) invert(1);
+
+  --card-bg: #f3e6d8;
+  --card-ink: #1c1210;
+  --card-muted: #6b5c50;
+  --card-line: #d9c8b5;
+}
+
+.products-grid {
+  column-count: 5;
+  column-gap: 10px;
+  padding: 40px 10vw 50px;
+  counter-reset: product;
+}
+
+@media (max-width: 1720px) {
+  .products-grid { column-count: 4; }
+}
+
+@media (max-width: 1300px) {
+  .products-grid { column-count: 3; }
+}
+
+@media (max-width: 900px) {
+  .products-grid { column-count: 2; }
+}
+
+@media (max-width: 575px) {
+  .products-grid { column-count: 1; }
+}
+
+.product-container {
+  --stagger: 0px;
+
+  counter-increment: product;
+  position: relative;
+  box-sizing: border-box;
+  width: 100%;
+  break-inside: avoid;
+
+  margin: var(--stagger) 0 18px;
+  padding: 18px 18px 20px;
+
+  color: var(--card-ink);
+  background-color: var(--card-bg);
+  border: 1px solid var(--card-line);
+
+  display: flex;
+  flex-direction: column;
+
+  transition: box-shadow 0.2s ease;
+}
+
+.product-container::before {
+  content: "sherman \2014 N\00b0 " counter(product, decimal-leading-zero);
+  display: block;
+  font-size: 11px;
+  letter-spacing: 0.03em;
+  color: var(--card-muted);
+  margin-bottom: 18px;
+  text-transform: uppercase;
+}
+
+/* zig-zag stagger: every card after the first in a column
+   starts a little lower or higher than the default gap. These
+   only ever add to the margin, so columns never collide. */
+.product-container:nth-child(5n + 2) { --stagger: 36px; }
+.product-container:nth-child(5n + 3) { --stagger: 8px; }
+.product-container:nth-child(5n + 4) { --stagger: 24px; }
+.product-container:nth-child(5n + 5) { --stagger: 14px; }
+
+/* Hover: bounce for as long as the pointer stays over the
+   card, then settle back down the moment it leaves. */
+.product-container:hover {
+  box-shadow: 0 14px 24px -10px rgba(0, 0, 0, 0.35);
+  animation: card-bounce 2.8s ease-in-out infinite;
+}
+
+@keyframes card-bounce {
+  25% { transform: translateY(-10px); }
+  75% { transform: translateY(10px); }
+  0%,100% { transform: translateY(0px); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .product-container:hover {
+    animation: none;
+    transform: translateY(-6px);
+  }
+}
+
+.product-image-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  height: 190px;
+  margin-top: 5px;
+  margin-bottom: 42px;
+  background: radial-gradient(circle at 50% 40%, rgba(200, 67, 46, 0.22), transparent 70%);
+}
+
+.product-image {
+  max-width: 100%;
+  max-height: 100%;
+  filter: grayscale(0.55) contrast(1.08);
+}
+
+.product-name {
+  height: auto;
+  min-height: 52px;
+  margin-bottom: 10px;
+
+  font-family: var(--font-display);
+  font-size: 26px;
+  line-height: 0.98;
+  text-transform: uppercase;
+  cursor: default;
+}
+
+.product-rating-container {
+  display: flex;
+  align-items: center;
+  margin-bottom: 10px;
+  font-size: 13px;
+  color: var(--card-muted);
+}
+
+.product-rating-stars {
+  width: 90px;
+  margin-right: 6px;
+  filter: grayscale(1) contrast(1.4);
+}
+
+.product-rating-count {
+  color: var(--card-muted);
+  cursor: pointer;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.product-price {
+  font-family: var(--font-body);
+  font-size: 16px;
+  font-weight: 600;
+  margin-bottom: 16px;
+  cursor: default;
+}
+
+.product-price::before {
+  content: "";
+}
+
+.product-quantity-container {
+  margin-bottom: 18px;
+}
+
+.product-quantity-container select {
+  color: var(--card-ink);
+  background-color: transparent;
+  border: none;
+  border-bottom: 1px solid var(--card-line);
+  border-radius: 0;
+  padding: 4px 6px 4px 0;
+  font-size: 15px;
+  box-shadow: none;
+}
+
+.product-spacer {
+  flex: 1;
+}
+
+.added-to-list {
+  color: var(--accent);
+  font-size: 15px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 2px;
+  margin-bottom: 10px;
+
+  /* At first, the "Added to cart" message will
+     be invisible. Use JavaScript to change the
+     opacity and make it visible. */
+  opacity: 0;
+}
+
+.added-to-list img {
+  height: 18px;
+  margin-right: 5px;
+  filter: brightness(0) saturate(100%) invert(38%) sepia(59%) saturate(1345%) hue-rotate(335deg);
+}
+
+.add-to-list-button {
+  width: 100%;
+  padding: 12px 7px;
+  border-radius: 0;
+  font-size: 14px;
+  letter-spacing: 0.03em;
+  text-transform: uppercase;
+
+  color: var(--card-bg);
+  background-color: var(--card-ink);
+  border: 1px solid var(--card-ink);
+  box-shadow: none;
+  transition: background-color 0.15s ease, color 0.15s ease;
+}
+
+.add-to-list-button:hover {
+  background-color: var(--accent);
+  border-color: var(--accent);
+  color: var(--on-accent);
+}
+
+.add-to-list-button:active {
+  background-color: var(--card-ink);
+  border-color: var(--card-ink);
+  color: var(--card-bg);
+}
