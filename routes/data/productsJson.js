@@ -8,6 +8,7 @@ const products = [
       count: 1298
     },
     price: 8999,
+    description: "This is a product special to the hearts belonging to the early 2000's. it has the fully cultivated retro vibe which any retro fan can encourage. This product is a truly crafted emotion for any retro fan. And even tho the design and looks are inspired by the retro era, the hardware and power is not. It can handle any retro or even some of the modern games that you have owned. Take it home, order today",
     keywords: [
       "Retro",
       "Pixelated",
@@ -23,6 +24,7 @@ const products = [
       count: 14293
     },
     price: 5599,
+    description: "This is a product special to the hearts belonging to the early 2000's. it has the fully cultivated retro vibe which any retro fan can encourage. This product is a truly crafted emotion for any retro fan. And even tho the design and looks are inspired by the retro era, the hardware and power is not. It can handle any retro or even some of the modern games that you have owned. Take it home, order today",
     keywords: [
       "poster",
       "Anime",
@@ -38,6 +40,7 @@ const products = [
       count: 12484
     },
     price: 2300,
+    description: "This is a product special to the hearts belonging to the early 2000's. it has the fully cultivated retro vibe which any retro fan can encourage. This product is a truly crafted emotion for any retro fan. And even tho the design and looks are inspired by the retro era, the hardware and power is not. It can handle any retro or even some of the modern games that you have owned. Take it home, order today",
     keywords: [
       "classy",
       "Anime",
@@ -54,6 +57,7 @@ const products = [
       count: 1048
     },
     price: 98,
+    description: "This is a product special to the hearts belonging to the early 2000's. it has the fully cultivated retro vibe which any retro fan can encourage. This product is a truly crafted emotion for any retro fan. And even tho the design and looks are inspired by the retro era, the hardware and power is not. It can handle any retro or even some of the modern games that you have owned. Take it home, order today",
     keywords: [
       "Delicious",
       "Explosion",
@@ -69,6 +73,7 @@ const products = [
       count: 566
     },
     price: 8699,
+    description: "This is a product special to the hearts belonging to the early 2000's. it has the fully cultivated retro vibe which any retro fan can encourage. This product is a truly crafted emotion for any retro fan. And even tho the design and looks are inspired by the retro era, the hardware and power is not. It can handle any retro or even some of the modern games that you have owned. Take it home, order today",
     keywords: [
       "Gravity-Forgotten",
       "Sphere",
@@ -77,13 +82,14 @@ const products = [
   },
   {
     id: "54e0eccd-8f36-462b-b68a-8182611d9add",
-    image: "images/products/zigzag-lamp.jpg",
+    image: "images/products/zigzag-lamp.png ",
     name: "Modern Smart Zig-Zag Lamp",
     rating: {
       stars: 4.5,
       count: 717
     },
     price: 3899,
+    description: "This is a product special to the hearts belonging to the early 2000's. it has the fully cultivated retro vibe which any retro fan can encourage. This product is a truly crafted emotion for any retro fan. And even tho the design and looks are inspired by the retro era, the hardware and power is not. It can handle any retro or even some of the modern games that you have owned. Take it home, order today",
     keywords: [
       "Lampy",
       "LampLighty",
@@ -99,6 +105,7 @@ const products = [
       count: 3796
     },
     price: 20099,
+    description: "This is a product special to the hearts belonging to the early 2000's. it has the fully cultivated retro vibe which any retro fan can encourage. This product is a truly crafted emotion for any retro fan. And even tho the design and looks are inspired by the retro era, the hardware and power is not. It can handle any retro or even some of the modern games that you have owned. Take it home, order today",
     keywords: [
       "Revolutionary",
       "First-Ever",
@@ -114,6 +121,7 @@ const products = [
       count: 11758
     },
     price: 3499,
+    description: "This is a product special to the hearts belonging to the early 2000's. it has the fully cultivated retro vibe which any retro fan can encourage. This product is a truly crafted emotion for any retro fan. And even tho the design and looks are inspired by the retro era, the hardware and power is not. It can handle any retro or even some of the modern games that you have owned. Take it home, order today",
     keywords: [
       "Stabalizing",
       "NotCold",
@@ -129,6 +137,7 @@ const products = [
       count: 31721
     },
     price: 23399,
+    description: "This is a product special to the hearts belonging to the early 2000's. it has the fully cultivated retro vibe which any retro fan can encourage. This product is a truly crafted emotion for any retro fan. And even tho the design and looks are inspired by the retro era, the hardware and power is not. It can handle any retro or even some of the modern games that you have owned. Take it home, order today",
     keywords: [
       "Ground-Breaking-Design",
       "Future",
@@ -144,6 +153,7 @@ const products = [
       count: 91530
     },
     price: 521999,
+    description: "This is a product special to the hearts belonging to the early 2000's. it has the fully cultivated retro vibe which any retro fan can encourage. This product is a truly crafted emotion for any retro fan. And even tho the design and looks are inspired by the retro era, the hardware and power is not. It can handle any retro or even some of the modern games that you have owned. Take it home, order today",
     keywords: [
       "braceurself",
       "Stinger",
@@ -160,6 +170,7 @@ const products = [
       count: 144
     },
     price: 399,
+    description: "This is a product special to the hearts belonging to the early 2000's. it has the fully cultivated retro vibe which any retro fan can encourage. This product is a truly crafted emotion for any retro fan. And even tho the design and looks are inspired by the retro era, the hardware and power is not. It can handle any retro or even some of the modern games that you have owned. Take it home, order today",
     keywords: [
       "bathroom",
       "washroom",
@@ -177,6 +188,7 @@ const products = [
       count: 89456
     },
     price: 93399,
+    description: "This is a product special to the hearts belonging to the early 2000's. it has the fully cultivated retro vibe which any retro fan can encourage. This product is a truly crafted emotion for any retro fan. And even tho the design and looks are inspired by the retro era, the hardware and power is not. It can handle any retro or even some of the modern games that you have owned. Take it home, order today",
     keywords: [
       "swiss",
       "intricate",
@@ -192,6 +204,7 @@ const products = [
       count: 235
     },
     price: 2099,
+    description: "This is a product special to the hearts belonging to the early 2000's. it has the fully cultivated retro vibe which any retro fan can encourage. This product is a truly crafted emotion for any retro fan. And even tho the design and looks are inspired by the retro era, the hardware and power is not. It can handle any retro or even some of the modern games that you have owned. Take it home, order today",
     keywords: [
       "robe",
       "swimsuit",
@@ -211,6 +224,7 @@ const products = [
       count: 33050
     },
     price: 15555,
+    description: "This is a product special to the hearts belonging to the early 2000's. it has the fully cultivated retro vibe which any retro fan can encourage. This product is a truly crafted emotion for any retro fan. And even tho the design and looks are inspired by the retro era, the hardware and power is not. It can handle any retro or even some of the modern games that you have owned. Take it home, order today",
     keywords: [
       "modern",
       "stylish"
@@ -225,6 +239,7 @@ const products = [
       count: 1604
     },
     price: 1699,
+    description: "This is a product special to the hearts belonging to the early 2000's. it has the fully cultivated retro vibe which any retro fan can encourage. This product is a truly crafted emotion for any retro fan. And even tho the design and looks are inspired by the retro era, the hardware and power is not. It can handle any retro or even some of the modern games that you have owned. Take it home, order today",
     keywords: [
       "Anime",
       "Showpiece",
@@ -232,5 +247,4 @@ const products = [
     ]
   }
 ]
-
-module.exports = products
+export default products

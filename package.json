@@ -10,17 +10,20 @@
     "type": "git",
     "url": "git+https://github.com/Sanjuontheweb/Sherman.git"
   },
-  "license": "ISC",
+  "license": "MIT",
   "author": "",
-  "type": "commonjs",
+  "type": "module",
   "main": "app.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "dev": "nodemon app.js"
   },
   "dependencies": {
+    "dotenv": "^18.0.6",
     "ejs": "^6.0.1",
-    "express": "^5.2.1"
+    "express": "^5.2.1",
+    "mongodb": "^7.7.0",
+    "mongoose": "^9.11.1"
   },
   "devDependencies": {
     "nodemon": "^3.1.14"

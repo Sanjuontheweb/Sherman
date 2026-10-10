@@ -78,7 +78,8 @@ export function renderPaymentSummary() {
 
  document.querySelector('.js-place-order').addEventListener('click', async() => {
   try {
-    const response = await fetch('https://supersimplebackend.dev/orders', {
+    const localhost = 'http://127.0.0.1/';
+    const response = await fetch(`https://${localhost}/api/backend/orders/`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
@@ -90,12 +91,13 @@ export function renderPaymentSummary() {
   
     const order = await response.json();
     addOrders(order);
+    localStorage.setItem('orders', JSON.stringify(order));
   }
    catch(error) {
     console.log("Ofc it's an error and u dont know what went wrong , Go bang ur head");
   }
 
-  window.location.href = "orders.html";
+  window.open("orders");
  });
 };
 

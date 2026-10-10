@@ -1,8 +1,18 @@
-const express = require("express")
+import express from 'express'
+import path from 'path'
+import { fileURLToPath } from "url"
+import dotenv from 'dotenv';
+import productRouter from "./routes/product.js"
+// import backendRouter from "./routes/database.js"
+import products from "./routes/data/productsJson.js"
+import productDetailsRouter from "./routes/productDetails.js"
+
+dotenv.config()
+const port = process.env.PORT;
+
 const app = express()
-const path = require("path")
-const productRouter = require("./routes/product")
-const products = require("./routes/data/productsJson")
+
+const __dirname = import.meta.dirname;
 
 app.set("view engine", 'ejs')
 app.use(express.json())
@@ -11,21 +21,10 @@ app.use(express.static(path.join(__dirname, "public")))
 
 
 app.get('/', (req, res) => {
-    res.render('sherman_m')
+    res.render('sherman')
 })
 app.get('/sherman', (req, res) => {
     res.redirect('/')
-})
-
-app.get('/details/:id', (req, res) => {
-    const productId = req.params.id
-    const product = products.find(product => product.id === productId)
-
-    if (product) {
-        res.render('products')
-    } else {
-        res.status(404).json({ error: 'Product not found' });
-    }
 })
 
 app.get('/orders', (req, res) => {
@@ -40,13 +39,43 @@ app.get('/checkout', (req, res) => {
     res.render(('checkout'))
 })
 
+app.get('/contacts', (req, res) => {
+    res.render(('contacts'))
+})
+
+app.get('/about', (req, res) => {
+    res.render(('about'))
+})
+
+app.get('/privacy', (req, res) => {
+    res.render(('policy'))
+})
+
+app.get('/404', (req, res) => {
+    res.render('404')
+})
+
 //api routes
-app.use('/api', productRouter)
+app.use('/api/data', productRouter)
+app.use('/details', productDetailsRouter)
+// app.use('api/backend/orders', backendRouter)
 
-app.listen(5173)
+//handle 404 errors
+app.use(function(req, res, next) {
+  res.status(404);
 
-// make the ui stylish
+  if (req.accepts('html')) {
+    res.render('404', { url: req.url });
+    return;
+  }
+
+  // default to plain-text. send()
+  res.type('txt').send('Not found');
+});
+
+app.listen(port)
+
 // create users, and auth route with jwt
 // try orders now
 // role based access
-// product page
+// search function

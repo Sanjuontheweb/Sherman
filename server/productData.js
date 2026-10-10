@@ -48,7 +48,7 @@ class Clothing extends Product{
 
   extraInfoHTML() {
     return `
-      <a href = "${this.sizeChartLink}" target = "_blank"
+      <a href = "../${this.sizeChartLink}" target = "_blank"
       class = "size-chart-link"> Size Chart </a>
     `;
   }
@@ -133,7 +133,7 @@ export const products = [
   },
   {
     id: "54e0eccd-8f36-462b-b68a-8182611d9add",
-    image: "../images/products/zigzag-lamp.jpg",
+    image: "../images/products/zigzag-lamp.png",
     name: "Modern Smart Zig-Zag Lamp",
     rating: {
       stars: 4.5,

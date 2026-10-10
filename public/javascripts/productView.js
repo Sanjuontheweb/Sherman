@@ -1,43 +1,16 @@
 import {list, addToList} from "./lists.js";
-import { products } from "./productData.js"
 
-let productHTML = '';
+export function updateListQuantity() {
+  let listQuantity = 0;
+    list.forEach((item) => {
+      listQuantity += item.quantity;
+    });
+};
 
-products.forEach((product) => {
-  productHTML += `<div class="product-container">
-          <div class="product-image-container">
-            <img class="product-image"
-              src="${product.image}">
-          </div>
-
-          <div class="product-name limit-text-to-2-lines">
-            ${product.name}
-          </div>
-
-           <div class="product-price">
-            ${product.getPrice()}
-          </div>
-
-           <div class="product-rating-container">
-            <img class="product-rating-stars"
-              src="${product.getStars()}">
-            <div class="product-rating-count link-primary">
-              ${product.rating.count}
-            </div>
-          </div>
-
-          ${product.extraInfoHTML()}
-
-          <div class="product-spacer"></div>
-
-          <div class="added-to-list js-added-to-list">
-            <img src="images/icons/checkmark.png">
-          </div>
-
-          <button class="add-to-list-button button-primary js-add-to-list" data-product-id = "${product.id}">
-            Add now
-          </button>
-        </div>`;
+document.querySelectorAll('.js-add-to-list').forEach((button) => {
+  button.addEventListener('click',() => {
+    const productId = button.dataset.productId;
+    addToList(productId);
+    updateListQuantity();
+  });
 });
-
-document.querySelector('.js-products-grid').innerHTML = productHTML;

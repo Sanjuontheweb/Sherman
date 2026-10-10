@@ -1,0 +1,333 @@
+/* Theme tokens (--bg, --ink, --card-bg, etc.) and fonts come from
+   stylesheets/shared/sherman-header.css, which this page loads
+   before this file. */
+
+html, body {
+  height: 100%;
+  margin: 0;
+  overflow: hidden;
+}
+
+body {
+  display: flex;
+  flex-direction: column;
+  background: var(--bg);
+  font-family: var(--font-body);
+  color: var(--ink);
+}
+
+.main {
+  flex: 1;
+  min-height: 0;
+  max-width: 900px;
+  width: 100%;
+  margin: 0 auto;
+  padding: 0 30px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.order-tracking {
+  position: relative;
+  width: 100%;
+  max-width: 480px;
+  height: 100%;
+  max-height: 760px;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 34px 0 28px;
+}
+
+.back-to-orders-link {
+  position: absolute;
+  top: 34px;
+  left: 20;
+  text-decoration: none;
+}
+
+.viewAllOrders {
+  padding: 9px 20px;
+  border-radius: 999px;
+
+  font-family: var(--font-body);
+  font-size: 12px;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  font-weight: 600;
+
+  color: var(--ink);
+  background: transparent;
+  border: 1px solid var(--line);
+  cursor: pointer;
+  transition: background-color 0.15s ease, color 0.15s ease, border-color 0.15s ease;
+}
+
+.viewAllOrders:hover {
+  background-color: var(--ink);
+  color: var(--bg);
+  border-color: var(--ink);
+}
+
+/* ===========================================================
+   TOP 75% - the order itself, staged the same way a single
+   product page is: a faint watermark + soft glow behind a
+   floating product shot.
+   =========================================================== */
+.tracking-stage {
+  flex: 0 0 75%;
+  min-height: 0;
+  width: 100%;
+
+  position: relative;
+  isolation: isolate;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+}
+
+.tracking-stage::before {
+  content: "sherman";
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--font-display);
+  font-size: clamp(3rem, 11vw, 7rem);
+  text-transform: uppercase;
+  letter-spacing: 0.02em;
+  color: var(--muted);
+  opacity: 0.07;
+  z-index: -2;
+  pointer-events: none;
+}
+
+.tracking-stage::after {
+  content: "";
+  position: absolute;
+  top: 48%;
+  left: 50%;
+  width: 70%;
+  height: 70%;
+  transform: translate(-50%, -50%);
+  background: radial-gradient(ellipse, color-mix(in srgb, var(--card-bg) 45%, transparent), transparent 72%);
+  z-index: -1;
+  pointer-events: none;
+}
+
+.tracking-eyebrow {
+  font-size: 13px;
+  letter-spacing: 0.04em;
+  color: var(--muted);
+  margin-bottom: 14px;
+}
+
+.product-image {
+  width: 150px;
+  max-width: 34vw;
+  max-height: 24vh;
+  object-fit: contain;
+  margin-bottom: 22px;
+  cursor: pointer;
+
+  filter: drop-shadow(0 22px 22px rgba(0, 0, 0, 0.3));
+  animation: tracking-float 5s ease-in-out infinite;
+  transition: transform 0.35s ease, filter 0.35s ease;
+}
+
+.product-image:hover {
+  transform: scale(1.05) rotate(-1.5deg);
+  filter: drop-shadow(0 28px 26px rgba(0, 0, 0, 0.38));
+  animation-play-state: paused;
+}
+
+@keyframes tracking-float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-10px); }
+}
+
+.delivery-date {
+  font-family: var(--font-display);
+  text-transform: lowercase;
+  font-weight: 400;
+  font-size: clamp(1.5rem, 3.2vw, 2.1rem);
+  color: var(--accent);
+  margin-bottom: 10px;
+}
+
+.product-info {
+  font-family: var(--font-body);
+  font-size: 15px;
+  color: var(--muted);
+  margin-bottom: 3px;
+}
+
+.product-info:first-of-type {
+  color: var(--ink);
+  font-weight: 600;
+  font-size: 17px;
+}
+
+/* ===========================================================
+   BOTTOM 25% - the tracking bar. A recessed track, a glowing
+   fill that animates in, and a pin that bounces + pings like a
+   live map marker. The whole bar tilts slightly on hover for a
+   touch of 3D depth, same spirit as the product image tilt on
+   the single-product page.
+   =========================================================== */
+.tracking-progress {
+  flex: 0 0 25%;
+  min-height: 0;
+  width: 100%;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.progress-labels-container {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+
+  font-family: var(--font-body);
+  font-size: 12.5px;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin-bottom: 16px;
+  cursor: default;
+}
+
+.current-status {
+  color: var(--accent);
+}
+
+@media (max-width: 450px) {
+  .progress-labels-container {
+    font-size: 11px;
+  }
+}
+
+.progress-bar-container {
+  position: relative;
+  height: 26px;
+  width: 100%;
+
+  background-color: var(--card-bg);
+  border: 1px solid var(--card-line);
+  border-radius: 999px;
+  box-shadow: inset 0 2px 6px rgba(0, 0, 0, 0.35);
+
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  transform-style: preserve-3d;
+}
+
+.tracking-progress:hover .progress-bar-container {
+  transform: perspective(600px) rotateX(8deg);
+  box-shadow: inset 0 2px 6px rgba(0, 0, 0, 0.35), 0 14px 22px -12px rgba(0, 0, 0, 0.45);
+}
+
+.progress-bar-track {
+  position: absolute;
+  inset: 0;
+  border-radius: 999px;
+  overflow: hidden;
+}
+
+.progress-bar {
+  position: relative;
+  height: 100%;
+  width: 50%;
+  border-radius: 999px;
+
+  background: linear-gradient(90deg, var(--accent), color-mix(in srgb, var(--accent) 65%, white));
+  box-shadow: 0 0 14px color-mix(in srgb, var(--accent) 65%, transparent);
+
+  animation: progress-fill 1.2s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+@keyframes progress-fill {
+  from { width: 0%; }
+  to { width: 50%; }
+}
+
+.progress-glow {
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 46px;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.6));
+  filter: blur(2px);
+  animation: progress-shimmer 1.8s ease-in-out infinite;
+}
+
+@keyframes progress-shimmer {
+  0%, 100% { opacity: 0.35; }
+  50% { opacity: 1; }
+}
+
+/* The marker rides at the edge of the fill like a pin on a map -
+   it bounces gently and sends out a soft ring "ping". */
+.progress-marker {
+  position: absolute;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 2;
+}
+
+.progress-marker-dot {
+  position: relative;
+  display: block;
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+
+  background: var(--card-ink);
+  border: 3px solid var(--accent);
+  box-shadow: 0 6px 10px rgba(0, 0, 0, 0.4);
+
+  animation: marker-bounce 1.1s ease-in-out infinite;
+}
+
+.progress-marker-dot::after {
+  content: "";
+  position: absolute;
+  inset: -9px;
+  border-radius: 50%;
+  border: 2px solid var(--accent);
+  opacity: 0.6;
+  animation: marker-ping 1.6s ease-out infinite;
+}
+
+@keyframes marker-bounce {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-4px); }
+}
+
+@keyframes marker-ping {
+  0% { transform: scale(0.6); opacity: 0.7; }
+  80% { transform: scale(1.9); opacity: 0; }
+  100% { opacity: 0; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .product-image,
+  .progress-bar,
+  .progress-glow,
+  .progress-marker-dot,
+  .progress-marker-dot::after {
+    animation: none;
+  }
+
+  .progress-bar { width: 50%; }
+}

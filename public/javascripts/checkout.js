@@ -49,7 +49,7 @@ export function renderOrdersSummary() {
                     <div class = "delete-div">
                     <span class="delete-quantity-link link-primary js-delete-link"
                     data-product-id = "${mathingProduct.id}">
-                      🗑️
+                      ❌
                     </span>
                     </div>
                   </div>

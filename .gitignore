@@ -1,3 +1,4 @@
 node_modules
 testFramework_Jasmine
 sherman
+.env

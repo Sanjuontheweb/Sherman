@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <link rel="icon" href="images/sherman-logo-title.png" type="image/icon type">
+    <title>About</title>
+
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="color-scheme" content="light dark">
+
+    <script>
+      try {
+        var savedTheme = localStorage.getItem('sherman-theme');
+        if (savedTheme) {
+          document.documentElement.setAttribute('data-theme', savedTheme);
+        }
+      } catch (e) {}
+    </script>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Anton&family=Inter:wght@400;500;600;700&family=Fraunces:ital@1&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="stylesheets/shared/general.css">
+    <link rel="stylesheet" href="stylesheets/shared/sherman-header.css">
+    <link rel="stylesheet" href="stylesheets/pages/about.css">
+  </head>
+  <body>
+    <div class="main">
+      <div class="about-eyebrow">[ about ]</div>
+
+      <h1 class="about-title">about</h1>
+
+      <p class="about-text">
+        Sherman is a small, strange shop for things that don't need to
+        exist, built anyway. Every product gets the same care whether
+        it's useful or not - that's the whole point.
+      </p>
+
+      <a class="about-link link-primary" href="https://sanjuontheweb.github.io/The-Portfolio/" target="_blank" rel="noopener">
+        visit the site
+      </a>
+
+      <a href="sherman" class="back-to-shop">&larr; sherman</a>
+    </div>
+  </body>
+</html>

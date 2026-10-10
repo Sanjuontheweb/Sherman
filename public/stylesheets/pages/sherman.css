@@ -1,5 +1,29 @@
+/* Theme colours, fonts and the header live in
+   sherman-header.css (shared), so every page stays in sync. */
+
+body {
+  font-family: var(--font-body);
+  color: var(--ink);
+  background-color: var(--bg);
+}
+
+input, select, button {
+  font-family: var(--font-body);
+}
+
+a {
+  color: inherit;
+}
+
+a:focus-visible,
+button:focus-visible,
+select:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 3px;
+}
+
 .main {
-  margin-top: 20px;
+  background-color: var(--bg);
 }
 
 .body{
@@ -7,184 +31,295 @@
   place-items: center;
 }
 
-.products-grid {
-  display: grid;
+/* ===========================================================
+   HERO
+   A full-page typographic front, built the way a magazine
+   cover is: a huge ghost wordmark behind, a solid wordmark
+   in front, a bold two-line claim, and one small call to
+   action pinned near the bottom, on top of a plain diagonal
+   split between the page colour and ink.
+   =========================================================== */
+.hero {
+  position: relative;
+  overflow: hidden;
+  min-height: calc(100vh - 72px);
+  isolation: isolate;
+}
+
+.hero-split {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background-color: var(--card-bg);
+  clip-path: polygon(58% 0, 100% 0, 100% 100%, 46% 100%);
+}
+
+/* An original flat-illustration portrait (not a photo of a
+   real or identifiable person) - blonde hair, sunglasses,
+   black leather jacket, on its own dark backdrop. Because its
+   background is baked into the image, it reads the same in
+   both themes rather than flipping colour like a mask would -
+   that's expected for a photo-style asset. Swap the src for a
+   licensed photo whenever you have one; the sizing below will
+   frame it the same way. */
+.hero-figure {
+  position: absolute;
+  right: 12%;
+  top: 27vh;
+  height: 73vh;
+  width: auto;
+  max-width: 34%;
+  object-fit: contain;
+  pointer-events: none;
+}
+
+@media (max-width: 800px) {
+  .hero-figure {
+    right: 5%;
+    top: auto;
+    bottom: 0;
+    height: 30vh;
+    max-width: 48%;
+  }
+}
+
+
+.hero-nav {
+  display: flex;
+  justify-content: space-between;
+  padding: 28px 5vw 0;
+  font-size: 13px;
+  letter-spacing: 0.02em;
+  color: var(--muted);
+}
+
+.hero-nav-left {
+  display: flex;
+  gap: 22px;
+}
+
+.hero-nav a {
+  text-decoration: none;
+  color: var(--muted);
+  border-bottom: 1px solid transparent;
+}
+
+.hero-nav a:hover {
+  color: var(--ink);
+  border-bottom: 1px solid var(--ink);
+}
+
+.hero-ghost {
+  position: absolute;
+  top: 4vh;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: -1;
+
+  font-family: var(--font-display);
+  font-size: clamp(6rem, 24vw, 19rem);
+  line-height: 1;
+  color: var(--ink);
+  opacity: 0.05;
+  white-space: nowrap;
+  pointer-events: none;
+}
+
+.hero-main {
+  display: flex;
+  align-items: center;
+  min-height: 58vh;
+  padding: 0 5vw;
+}
+
+.hero-word {
+  font-family: var(--font-display);
+  font-size: clamp(3.5rem, 13vw, 11rem);
+  line-height: 0.9;
+  color: var(--ink);
+}
+
+.hero-foot {
+  position: absolute;
+  left: 5vw;
+  right: 5vw;
+  bottom: 6vh;
   z-index: 1;
 
-  /* - In CSS Grid, 1fr means a column will take up the
-       remaining space in the grid.
-     - If we write 1fr 1fr ... 1fr; 8 times, this will
-       divide the grid into 8 columns, each taking up an
-       equal amount of the space.
-     - repeat(8, 1fr); is a shortcut for repeating "1fr"
-       8 times (instead of typing out "1fr" 8 times).
-       repeat(...) is a special property that works with
-       display: grid; */
-  grid-template-columns: repeat(8, 1fr);
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 24px;
+  flex-wrap: wrap;
 }
 
-/* @media is used to create responsive design (making the
-   website look good on any screen size). This @media
-   means when the screen width is 2000px or less, we
-   will divide the grid into 7 columns instead of 8. */
-@media (max-width: 2000px) {
-  .products-grid {
-    grid-template-columns: repeat(7, 1fr);
+.hero-deal {
+  font-family: var(--font-display);
+  font-size: clamp(2.6rem, 9vw, 6.5rem);
+  line-height: 0.85;
+  color: var(--accent);
+}
+
+.hero-deal span {
+  display: block;
+  color: var(--muted);
+  font-size: 0.4em;
+  opacity: 0.7;
+}
+
+.hero-cta {
+  display: inline-block;
+  font-family: var(--font-body);
+  font-size: 15px;
+  letter-spacing: 0.02em;
+  color: var(--card-ink);
+  text-decoration: none;
+  padding-bottom: 3px;
+  border-bottom: 1px solid var(--card-ink);
+  white-space: nowrap;
+}
+
+.hero-cta:hover {
+  color: var(--accent);
+  border-color: var(--accent);
+}
+
+@media (max-width: 800px) {
+  .hero-split {
+    clip-path: polygon(0 62%, 100% 48%, 100% 100%, 0 100%);
+  }
+
+  .hero-claim {
+    position: static;
+    text-align: left;
+    padding: 0 5vw;
+    margin-top: 18px;
+    /* On the stacked mobile layout the claim sits on the
+       page background, not the dark panel, so it needs the
+       page's ink colour instead of the panel's cream one. */
+    color: var(--ink);
+  }
+
+  .hero-main {
+    min-height: 30vh;
+  }
+
+  .hero-foot {
+    position: static;
+    padding: 8vh 5vw 6vh;
   }
 }
 
-/* This @media means when the screen width is 1600px or
-   less, we will divide the grid into 6 columns. */
-@media (max-width: 1600px) {
-  .products-grid {
-    grid-template-columns: repeat(6, 1fr);
-  }
+/* ===========================================================
+   SECTION HEADING (sits between the hero and the products)
+   =========================================================== */
+.header-text {
+  font-family: var(--font-body);
+  font-size: 13px;
+  letter-spacing: 0.04em;
+  color: var(--muted);
+
+  display: block;
+  padding: 30px 5vw 6px;
+}
+
+/* ===========================================================
+   PRODUCTS
+   Cards are a fixed dark, editorial surface regardless of the
+   page's light/dark theme (--card-bg / --card-ink), same as
+   the rest of the hero's dark panel.
+
+   Layout: CSS columns (a "waterfall"), not flex + transform.
+   Real product titles wrap to one or two lines depending on
+   their length, so cards are never a uniform height - a fixed
+   translateY stagger will eventually push a short card up into
+   the row below it, which was the overlap in production. Columns
+   stack each card under the real height of the one before it in
+   the same column, so a zig-zag offset can never cause overlap,
+   whatever the content.
+   =========================================================== */
+.products-grid {
+  column-count: 5;
+  column-gap: 10px;
+  padding: 40px 10vw 50px;
+  counter-reset: product;
+}
+
+@media (max-width: 1720px) {
+  .products-grid { column-count: 4; }
 }
 
 @media (max-width: 1300px) {
-  .products-grid {
-    grid-template-columns: repeat(5, 1fr);
-  }
+  .products-grid { column-count: 3; }
 }
 
-@media (max-width: 1000px) {
-  .products-grid {
-    grid-template-columns: repeat(4, 1fr);
-  }
-}
-
-@media (max-width: 800px) {
-  .products-grid {
-    grid-template-columns: repeat(3, 1fr);
-  }
+@media (max-width: 900px) {
+  .products-grid { column-count: 2; }
 }
 
 @media (max-width: 575px) {
-  .products-grid {
-    grid-template-columns: repeat(2, 1fr);
-  }
-}
-
-@media (max-width: 450px) {
-  .products-grid {
-    grid-template-columns: 1fr;
-  }
-}
-
-@media (max-width: 800px) {
-  .header-text {
-    font-size: 25px;
-  }
-}
-
-@media (max-width: 450px) {
-  .header-text {
-    font-size: 19px;
-  }
-}
-
-.sherman-down-header {
-  padding: 7px;
-  background-image: linear-gradient(rgb(0, 0, 0),rgb(42, 41, 41), rgb(91, 91, 91),
-  rgb(141, 141, 141),rgb(194, 194, 194),
-   rgb(226, 226, 226), white);
-  
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  margin-bottom: 10px;
-
-  position: relative;
-  top: 68;
-  left: 0;
-  right: 0;
-  height: 10px;
-
-  z-index: 2;
-}
-
-.slideshow-container {
-  height: 45vh;
-
-  overflow: hidden;
-  position: relative;
-  
-  border: 3px solid rgb(0, 0, 0);
-  box-shadow: rgba(0, 0, 0, 0.4) 0, 3px, 13px;
-}
-
-.slide {
-  position: absolute;
-  height: 100%;
-
-  opacity: 0;
-  inset: 0;
-  animation: slide-show 25s infinite;
-}
-
-.slide-image-2 {
-  animation-delay: 4s;
-}
-
-.slide-image-3 {
-  animation-delay: 8s;
-}
-
-.slide-image-4 {
-  animation-delay: 12s;
-}
-
-.slide-image-5 {
-  animation-delay: 16s;
-}
-
-.slide img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  object-position: center;
-}
-
-@keyframes slide-show {
-  0%{
-    opacity: 0;
-  }
-  10%{
-    opacity: 1;
-  }
-  20%,
-  30%{
-    opacity: 1;
-    scale: 1.04;
-  }
-  50%{
-    opacity: 0;
-  }
-}
-
-.header-text {
-  color: rgb(22, 22, 22);
-  font-size: 28px;
-  font-family: 'Alan Sans', sans-serif;
-  font-weight: 700;
-
-  display: inline-block;
-  margin-top: 25px;
-  margin-left: 15px;
-
+  .products-grid { column-count: 1; }
 }
 
 .product-container {
-  padding-top: 30px;
-  padding-bottom: 25px;
-  padding-left: 25px;
-  padding-right: 25px;
+  --stagger: 0px;
 
-  border-right: 1px solid rgb(231, 231, 231);
-  border-bottom: 1px solid rgb(231, 231, 231);
+  counter-increment: product;
+  position: relative;
+  box-sizing: border-box;
+  width: 100%;
+  break-inside: avoid;
+
+  margin: var(--stagger) 0 18px;
+  padding: 18px 18px 20px;
+
+  color: var(--card-ink);
+  background-color: var(--card-bg-cards);
+  border: 1px solid var(--card-line);
 
   display: flex;
   flex-direction: column;
+  cursor: pointer;
+
+  transition: box-shadow 0.2s ease;
+}
+
+.product-container::before {
+  content: "sherman \2014 N\00b0 " counter(product, decimal-leading-zero);
+  display: block;
+  font-size: 11px;
+  letter-spacing: 0.03em;
+  color: var(--card-muted);
+  margin-bottom: 18px;
+  text-transform: uppercase;
+}
+
+/* zig-zag stagger: every card after the first in a column
+   starts a little lower or higher than the default gap. These
+   only ever add to the margin, so columns never collide. */
+.product-container:nth-child(5n + 2) { --stagger: 32px; }
+.product-container:nth-child(5n + 3) { --stagger: 13px; }
+.product-container:nth-child(5n + 4) { --stagger: 34px; }
+.product-container:nth-child(5n + 5) { --stagger: 4px; }
+
+/* Hover: bounce for as long as the pointer stays over the
+   card, then settle back down the moment it leaves. */
+.product-container:hover {
+  box-shadow: 0 14px 24px -10px rgba(0, 0, 0, 0.35);
+  animation: card-bounce 2.8s ease-in-out infinite;
+}
+
+@keyframes card-bounce {
+  25% { transform: translateY(-10px); }
+  75% { transform: translateY(10px); }
+  0%,100% { transform: translateY(0px); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .product-container:hover {
+    animation: none;
+    transform: translateY(-6px);
+  }
 }
 
 .product-image-container {
@@ -192,92 +327,127 @@
   justify-content: center;
   align-items: center;
 
-  height: 180px;
-  margin-bottom: 20px;
+  height: 190px;
+  margin-top: 7rem;
+  margin-bottom: 8rem;
+  background: radial-gradient(circle at 50% 40%, rgba(200, 67, 46, 0.22), transparent 70%);
 }
 
 .product-image {
-  /* Images will overflow their container by default. To
-    prevent this, we set max-width and max-height to 100%
-    so they stay inside their container. */
   max-width: 100%;
   max-height: 100%;
-}
-.product-image:hover {
-  transform: scale(1.04);
+  filter: grayscale(0.55) contrast(1.08);
 }
 
 .product-name {
-  height: 40px;
-  margin-bottom: 5px;
-  font-weight: 500;
+  height: auto;
+  min-height: 52px;
+
+  font-family: var(--font-display);
+  font-size: 26px;
+  line-height: 0.98;
+  text-transform: uppercase;
   cursor: default;
-}
-
-.product-rating-container {
-  display: flex;
-  align-items: center;
-  margin-bottom: 10px;
-}
-
-.product-rating-stars {
-  width: 100px;
-  margin-right: 6px;
-}
-
-.product-rating-count {
-  color: rgb(36, 199, 3);
-  cursor: pointer;
-  margin-top: 3px;
-}
-
-.product-price {
-  font-weight: 500;
-  font-family: "Alan Sans", sans-serif;
-  margin-bottom: 10px;
-  cursor: default;
-}
-
-.product-quantity-container {
-  margin-bottom: 17px;
 }
 
 .product-spacer {
   flex: 1;
 }
 
-.added-to-list {
-  color: rgb(6, 125, 98);
-  font-size: 16px;
-
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  margin-top: 2px;
-  margin-bottom: 10px;
-
-  /* At first, the "Added to cart" message will
-     be invisible. Use JavaScript to change the
-     opacity and make it visible. */
-  opacity: 0;
-}
-
-.added-to-list img {
-  height: 20px;
-  margin-right: 5px;
-}
-
-.add-to-list-button {
-  width: 100%;
-  padding: 10px 7px 10px 7px;
-  border-radius: 12px;
-  font-weight: 500;
-}
-
 .size-chart-link{
-  font-family: "Alan Sans", sans-serif;
-  font-size: 16px;
-  font-weight: 500;
-  color: rgb(56, 97, 245);
+  font-size: 13px;
+  margin-top: 10px;
+  color: var(--card-muted);
+  text-decoration: underline;
+  text-underline-offset: 3px;
   cursor: pointer;
+}
+
+/* ===========================================================
+   FOOTER
+   Brown, independent of the light/dark theme
+   =========================================================== */
+.site-footer {
+  background-color: rgb(97, 33, 24);
+  color: #d9d6ef;
+  padding: 64px 5vw 34px;
+}
+
+.footer-top {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 48px;
+  justify-content: space-between;
+  padding-bottom: 56px;
+}
+
+.footer-claim {
+  flex: 1 1 260px;
+  max-width: 360px;
+  font-family: var(--font-serif);
+  font-size: 22px;
+  line-height: 1.35;
+  color: #f2f0fb;
+}
+
+.footer-col {
+  flex: 0 0 auto;
+  min-width: 150px;
+}
+
+.footer-col h3 {
+  margin: 0 0 14px;
+  font-family: var(--font-serif);
+  font-weight: 500;
+  font-size: 19px;
+  color: #f2f0fb;
+}
+
+.footer-col ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.footer-col li {
+  margin-bottom: 10px;
+}
+
+.footer-col a {
+  font-size: 14px;
+  color: #d9d6ef;
+  text-decoration: none;
+}
+
+.footer-col a:hover {
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.footer-bottom {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 16px;
+  padding-top: 28px;
+  border-top: 1px solid rgba(217, 214, 239, 0.25);
+}
+
+.footer-wordmark {
+  font-family: var(--font-display);
+  font-size: clamp(2.4rem, 8vw, 5rem);
+  line-height: 1;
+  color: #f2f0fb;
+}
+
+.footer-fine {
+  font-size: 13px;
+  color: #a9a5cf;
+}
+
+@media (max-width: 575px) {
+  .footer-top {
+    gap: 34px;
+  }
 }

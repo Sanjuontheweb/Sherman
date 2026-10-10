@@ -3,16 +3,77 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Product</title>
+    <meta name="color-scheme" content="light dark">
+    <title><%= product.name %></title>
 
+    <script>
+      try {
+        var savedTheme = localStorage.getItem('sherman-theme');
+        if (savedTheme) {
+          document.documentElement.setAttribute('data-theme', savedTheme);
+        }
+      } catch (e) {}
+    </script>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Anton&family=Inter:wght@400;500;600;700&family=Fraunces:ital@1&display=swap" rel="stylesheet">
+
+    <!-- sherman-header.css must load first: it's the only place
+         --bg, --card-bg, --ink, etc. are actually defined. -->
+    <link rel="stylesheet" href="/stylesheets/shared/sherman-header.css">
     <link rel="stylesheet" href="/stylesheets/pages/products.css">
 </head>
 <body>
-    <div class="main">
-      <div class="products-grid js-products-grid">
-      </div>
-    </div>
+     <% if (product) { %>
+        <a href="/#products" class="back-to-shop">&larr; sherman</a>
 
-     <script type = "module" src = "/javascripts/productView.js"></script>
+        <div class="product-container">
+            <div class="product-image-container">
+                <img class="product-image" src="<%= product.image %>">
+            </div>
+
+            <div class="product-name limit-text-to-2-lines">
+              <%= product.name %>
+            </div>
+
+            <div class="product-description">
+              <%= product.description %>
+            </div>
+
+            <div class="product-price">
+              <%= product.getPrice() %>
+            </div>
+
+            <div class="product-rating-container">
+                <img class="product-rating-stars" src="<%= product.getStars() %>">
+                <div class="product-rating-count link-primary">
+                  <%= product.rating.count %>
+                </div>
+            </div>
+
+            <% if (product.extraInfoHTML) { %>
+              <div id="additional-info">
+                <%= product.extraInfoHTML() %>
+              </div>
+            <% } %>
+
+            <div class="product-spacer"></div>
+        </div>
+
+        <div class="cart-dock">
+          <div class="added-to-list js-added-to-list">
+              <img src="../images/icons/checkmark.png">
+          </div>
+
+          <button class="add-to-list-button button-primary js-add-to-list" data-product-id="<%= product.id %>" onclick="window.location.href='/checkout'">
+            Check IT
+          </button>
+        </div>
+      <% } else { %>
+        <h1>Product not found</h1>
+      <% } %>
+
+      <script type = "module" src = "/javascripts/productView.js"></script>
 </body>
 </html>

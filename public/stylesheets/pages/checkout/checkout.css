@@ -1,3 +1,12 @@
+/* Design tokens (colours, fonts) come from
+   stylesheets/shared/sherman-header.css, linked in checkout.ejs. */
+
+body {
+  font-family: var(--font-body);
+  color: var(--ink);
+  background-color: var(--bg);
+}
+
 .main {
   max-width: 1100px;
   padding-left: 30px;
@@ -13,10 +22,33 @@
   margin-left: auto;
   margin-right: auto;
 }
+
+/* A small eyebrow label above the page title, in the same
+   voice as the hero's "[ shop the drop ]" link. */
+.main::before {
+  content: "[ secure checkout ]";
+  display: block;
+  font-size: 13px;
+  letter-spacing: 0.04em;
+  color: var(--muted);
+  margin-bottom: 10px;
+  animation: fade-up 0.5s ease both;
+}
+
 .page-title {
-  font-weight: 700;
-  font-size: 22px;
-  margin-bottom: 18px;
+  font-family: var(--font-display);
+  text-transform: lowercase;
+  font-weight: 400;
+  font-size: clamp(2rem, 5vw, 3.2rem);
+  line-height: 1;
+  margin-bottom: 28px;
+  animation: fade-up 0.6s ease both;
+  animation-delay: 0.06s;
+}
+
+@keyframes fade-up {
+  from { opacity: 0; transform: translateY(14px); }
+  to { opacity: 1; transform: translateY(0); }
 }
 
 .checkout-grid {
@@ -24,7 +56,7 @@
   /* Here, 1fr means the first column will take
      up the remaining space in the grid. */
   grid-template-columns: 1fr 350px;
-  column-gap: 12px;
+  column-gap: 20px;
 
   /* Use align-items: start; to prevent the elements
      in the grid from stretching vertically. */
@@ -41,20 +73,65 @@
   }
 }
 
+/* Order items and the payment summary read as the same dark,
+   editorial card used for products on the home page, so
+   checkout still feels like part of the same site. */
 .list-item-container,
 .payment-summary {
-  border: 2px solid rgb(222, 222, 222);
-  border-radius: 12px;
-  padding: 18px;
+  color: var(--card-ink);
+  background-color: var(--card-bg);
+  border: 1px solid var(--card-line);
+  border-radius: 0;
+  padding: 22px;
+
+  opacity: 1;
+  animation: fade-up 0.5s ease forwards;
 }
 
+/* The card needs TWO animations at once: the one-time entrance
+   fade, and a bounce that should only play on hover. Previously
+   this swapped the whole `animation` property on :hover, which
+   meant on mouse-out the property changed value again (back to
+   fade-up) - and changing animation-name always restarts it from
+   0%, so the card flashed back to its invisible/offset starting
+   frame every time you stopped hovering (the "blink").
+
+   Fix: declare both animations together, always, and only toggle
+   animation-play-state on hover. Pausing/resuming a running
+   animation never resets its timeline, so there's no flash, and
+   the bounce still runs continuously while you hover. */
 .list-item-container {
-  margin-bottom: 12px;
+  margin-bottom: 14px;
+  transition: box-shadow 0.2s ease;
+
+  animation: fade-up 0.5s ease forwards, card-bounce 2.1s ease-in-out infinite;
+  animation-play-state: running, paused;
+}
+
+/* Stagger each order item's entrance slightly. The second value in
+   each delay list is for card-bounce, which stays paused until
+   hover anyway, so 0s there is fine. */
+.list-item-container:nth-child(1) { animation-delay: 0.12s, 0s; }
+.list-item-container:nth-child(2) { animation-delay: 0.2s, 0s; }
+.list-item-container:nth-child(3) { animation-delay: 0.28s, 0s; }
+.list-item-container:nth-child(4) { animation-delay: 0.36s, 0s; }
+.list-item-container:nth-child(n + 5) { animation-delay: 0.42s, 0s; }
+
+.list-item-container:hover {
+  box-shadow: 0 14px 24px -10px rgba(0, 0, 0, 0.35);
+  animation-play-state: running, running;
+}
+
+@keyframes card-bounce {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-10px); }
 }
 
 .payment-summary {
-  padding-bottom: 5px;
-  border-radius: 5px;
+  padding-bottom: 14px;
+  animation-delay: 0.18s;
+  position: sticky;
+  top: 90px;
 }
 
 @media (max-width: 1000px) {
@@ -64,14 +141,17 @@
       placed in is determined by the order of the elements in
       the HTML. grid-row overrides this default ordering). */
     grid-row: 1;
-    margin-bottom: 12px;
+    margin-bottom: 14px;
+    position: static;
   }
 }
 
 .delivery-date {
-  color: rgb(24,40,107);
-  font-weight: 700;
-  font-size: 19px;
+  color: var(--accent);
+  font-family: var(--font-display);
+  font-weight: 400;
+  text-transform: lowercase;
+  font-size: 22px;
   margin-top: 5px;
   margin-bottom: 22px;
 }
@@ -95,6 +175,7 @@
 .product-image {
   max-width: 100%;
   max-height: 120px;
+  filter: grayscale(0.5) contrast(1.08);
 
   /* margin-left: auto;
      margin-right auto;
@@ -105,22 +186,51 @@
 }
 
 .product-name {
-  font-weight: 700;
+  font-family: var(--font-display);
+  text-transform: uppercase;
+  font-weight: 400;
+  font-size: 19px;
+  line-height: 1.15;
   margin-bottom: 8px;
 }
 
 .product-price {
-  color: rgb(8, 5, 193);
+  color: var(--accent);
   font-weight: 700;
   margin-bottom: 5px;
 }
 
+.product-quantity {
+  color: var(--card-muted);
+}
+
 .product-quantity .link-primary {
   margin-left: 3px;
+  color: var(--accent) !important;
+  font-family: var(--font-body);
 }
 
 .delete-div {
   margin-top: 7px;
+}
+
+/* A little wiggle on the delete link - playful, but only on
+   deliberate hover, not something that fires on page load. */
+.delete-div .link-primary {
+  color: var(--card-muted) !important;
+  font-family: var(--font-body);
+  display: inline-block;
+}
+
+.delete-div .link-primary:hover {
+  color: var(--accent) !important;
+  animation: wiggle 0.5s ease;
+}
+
+@keyframes wiggle {
+  0%, 100% { transform: rotate(0deg); }
+  25% { transform: rotate(-4deg); }
+  75% { transform: rotate(4deg); }
 }
 
 @media (max-width: 1000px) {
@@ -130,7 +240,7 @@
        an element is placed in is determined by the order
        of the elements in the HTML. grid-column overrides
        this default ordering).
-       
+
        / span 2 means this element will take up 2 columns
        in the grid (Normally, each element takes up 1
        column in the grid). */
@@ -139,37 +249,68 @@
 }
 
 .delivery-options-title {
+  font-family: var(--font-body);
   font-weight: 700;
-  margin-bottom: 10px;
+  font-size: 13px;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--card-muted);
+  margin-bottom: 14px;
 }
 
 .delivery-option {
   display: grid;
   grid-template-columns: 24px 1fr;
+  align-items: start;
   margin-bottom: 12px;
+  padding: 10px;
+  border: 1px solid transparent;
   cursor: pointer;
+  transition: border-color 0.15s ease, transform 0.15s ease;
+}
+
+.delivery-option:hover {
+  border-color: var(--card-line);
+}
+
+/* When its radio is checked, the whole option gets a bright
+   border and a quick pop - the "crazy" touch on an otherwise
+   calm form. Falls back gracefully in browsers without :has(). */
+.delivery-option:has(.delivery-option-input:checked) {
+  border-color: var(--accent);
+  animation: option-pop 0.3s ease;
+}
+
+@keyframes option-pop {
+  0% { transform: scale(0.98); }
+  60% { transform: scale(1.01); }
+  100% { transform: scale(1); }
 }
 
 .delivery-option-input {
   margin-left: 0px;
+  margin-top: 2px;
   cursor: pointer;
+  accent-color: var(--accent);
 }
 
 .delivery-option-date {
-  color: rgb(24,40,107);
+  color: var(--card-ink);
   font-weight: 500;
   margin-bottom: 3px;
 }
 
 .delivery-option-price {
-  color: rgb(120, 120, 120);
+  color: var(--card-muted);
   font-size: 15px;
 }
 
 .payment-summary-title {
-  font-weight: 700;
-  font-size: 18px;
-  margin-bottom: 12px;
+  font-family: var(--font-display);
+  text-transform: lowercase;
+  font-weight: 400;
+  font-size: 22px;
+  margin-bottom: 14px;
 }
 
 .payment-summary-row {
@@ -179,19 +320,20 @@
      The 1st column will take up the remaining space. */
   grid-template-columns: 1fr auto;
 
-  font-family: "Alan Sans", sans-serif;
+  font-family: var(--font-body);
   font-weight: 500;
   font-size: 15px;
-  color: rgb(63, 63, 63);
+  color: var(--card-muted);
   margin-bottom: 9px;
 }
 
 .payment-summary-money {
   text-align: right;
+  color: var(--card-ink);
 }
 
 .subtotal-row .payment-summary-money {
-  border-top: 1px solid rgb(222, 222, 222);
+  border-top: 1px solid var(--card-line);
 }
 
 .subtotal-row div {
@@ -199,34 +341,94 @@
 }
 
 .total-row {
-  color: rgb(12, 0, 182);
-  font-weight: 700;
-  font-size: 18px;
+  color: var(--accent);
+  font-family: var(--font-display);
+  font-weight: 400;
+  text-transform: lowercase;
+  font-size: 22px;
 
-  border-top: 1px solid rgb(222, 222, 222);
+  border-top: 1px solid var(--card-line);
   padding-top: 18px;
+}
+
+.total-row .payment-summary-money {
+  color: var(--accent);
 }
 
 .place-order-button {
   width: 100%;
-  padding-top: 12px;
-  padding-bottom: 12px;
-  border-radius: 22px;
+  padding-top: 13px;
+  padding-bottom: 13px;
+  border-radius: 0;
 
-  font-weight: 500;
+  font-family: var(--font-body);
+  font-size: 14px;
+  letter-spacing: 0.03em;
+  text-transform: uppercase;
+  font-weight: 600;
+
+  color: var(--card-bg);
+  background-color: var(--card-ink);
+  border: 1px solid var(--card-ink);
 
   margin-top: 11px;
   margin-bottom: 8px;
+
+  position: relative;
+  overflow: hidden;
+  transition: background-color 0.15s ease, color 0.15s ease;
+}
+
+.place-order-button:hover {
+  background-color: var(--accent);
+  border-color: var(--accent);
+  color: var(--on-accent);
+}
+
+/* A diagonal shimmer that sweeps across the button on hover -
+   the "crazy" flourish on the one button that matters most. */
+.place-order-button::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -60%;
+  width: 40%;
+  height: 100%;
+  background: linear-gradient(115deg, transparent, rgba(255, 255, 255, 0.45), transparent);
+  transform: skewX(-20deg);
+}
+
+.place-order-button:hover::after {
+  animation: shimmer-sweep 0.9s ease;
+}
+
+@keyframes shimmer-sweep {
+  from { left: -60%; }
+  to { left: 130%; }
 }
 
 .upi-box {
   width: 100%;
   background-color: black;
-  border-radius: 27px;
+  border-radius: 0;
   padding: 8px 0 8px 0;
 
   margin-top: 9px;
   margin-bottom: 3px;
+
+  position: relative;
+  overflow: hidden;
+}
+
+.upi-box::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -60%;
+  width: 30%;
+  height: 100%;
+  background: linear-gradient(115deg, transparent, rgba(255, 255, 255, 0.18), transparent);
+  animation: shimmer-sweep 2.6s ease-in-out infinite;
 }
 
 .upi-box-image {
@@ -236,6 +438,7 @@
 
 .quantity-label {
   font-weight: 700;
+  color: var(--card-ink);
 }
 
 .Empty-list {
@@ -254,15 +457,38 @@
   margin-top: -2px;
   margin-left: 3px;
 }
+
 input[type="checkbox"] {
   cursor: pointer;
   appearance: auto;
   width: 17px;
   height: 17px;
+  accent-color: var(--accent);
 
   border: none;
 }
 
 .UPI-options {
   display: inline-block;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .main::before,
+  .page-title,
+  .list-item-container,
+  .payment-summary {
+    animation: none;
+    opacity: 1;
+  }
+
+  .list-item-container:hover {
+    animation-play-state: paused, paused;
+  }
+
+  .delete-div .link-primary:hover,
+  .delivery-option:has(.delivery-option-input:checked),
+  .place-order-button:hover::after,
+  .upi-box::after {
+    animation: none;
+  }
 }

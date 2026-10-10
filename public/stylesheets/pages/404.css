@@ -1,0 +1,204 @@
+:root {
+  --font-display: "Anton", "Arial Narrow", sans-serif;
+  --font-body: "Inter", Arial, sans-serif;
+  --font-serif: "Fraunces", Georgia, serif;
+}
+
+:root {
+  --bg: #f7e7ce;
+  --surface: #fffaf1;
+  --header-bg: #f7e7ce;
+  --ink: #1c1210;
+  --muted: #6b5c50;
+  --line: #1c1210;
+
+  --accent: #c8432e;
+  --on-accent: #f7e7ce;
+  --icon-filter: brightness(0);
+
+  --card-bg-cards: #1c1210;
+  --card-bg: #1c1210;
+  --card-ink: #f3e9db;
+  --card-muted: #b6a99a;
+  --card-line: #3a2c26;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #180307;
+    --surface: #22060c;
+    --header-bg: #180307;
+    --ink: #f3e6d8;
+    --muted: #b79c8c;
+    --line: #f3e6d8;
+
+    --accent: #ff7a5c;
+    --on-accent: #180307;
+    --icon-filter: brightness(0) invert(1);
+
+    --card-bg-cards: #f3cea6;
+    --card-bg: #f3e6d8;
+    --card-ink: #1c1210;
+    --card-muted: #6b5c50;
+    --card-line: #d9c8b5;
+  }
+}
+
+:root[data-theme="dark"] {
+  --bg: #180307;
+  --surface: #22060c;
+  --header-bg: #180307;
+  --ink: #f3e6d8;
+  --muted: #b79c8c;
+  --line: #f3e6d8;
+
+  --accent: #ff7a5c;
+  --on-accent: #180307;
+  --icon-filter: brightness(0) invert(1);
+
+  --card-bg-cards: #f3cea6;
+  --card-bg: #f3e6d8;
+  --card-ink: #1c1210;
+  --card-muted: #6b5c50;
+  --card-line: #d9c8b5;
+}
+
+html, body { height: 100%; margin: 0; }
+
+body {
+  background-color: var(--bg);
+  font-family: var(--font-body);
+  color: var(--ink);
+
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+}
+
+/* ===========================================================
+   Stage: same ghost-wordmark trick as the hero/product pages,
+   so a lost visitor still feels like they're on the site.
+   =========================================================== */
+.error-stage {
+  position: relative;
+  isolation: isolate;
+  width: 100%;
+  min-height: 100vh;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  padding: 24px;
+}
+
+.error-ghost {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: -1;
+
+  font-family: var(--font-display);
+  font-size: clamp(6rem, 26vw, 20rem);
+  line-height: 1;
+  color: var(--ink);
+  opacity: 0.05;
+  white-space: nowrap;
+  pointer-events: none;
+}
+
+.eyebrow {
+  font-family: var(--font-serif);
+  font-style: italic;
+  font-size: 15px;
+  letter-spacing: 0.08em;
+  color: var(--muted);
+  text-transform: uppercase;
+  margin: 0 0 18px;
+  padding-bottom: 20px;
+}
+
+.four {
+  font-family: var(--font-display);
+  font-size: clamp(5rem, 18vw, 11rem);
+  line-height: 0.9;
+  color: var(--ink);
+  margin: 0;
+
+  animation: four-float 4s ease-in-out infinite;
+}
+
+@keyframes four-float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-10px); }
+}
+
+.sub {
+  font-family: var(--font-display);
+  text-transform: lowercase;
+  font-size: clamp(1.1rem, 3vw, 1.7rem);
+  color: var(--muted);
+  margin: 18px 0 40px;
+  max-width: 44ch;
+}
+
+.back-button {
+  position: relative;
+  overflow: hidden;
+
+  display: inline-block;
+  padding: 14px 32px;
+  border-radius: 999px;
+  font-family: var(--font-body);
+  font-size: 13px;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  text-decoration: none;
+
+  color: var(--bg);
+  background-color: var(--ink);
+  border: 1px solid var(--ink);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.25);
+  transition: transform 0.15s ease, box-shadow 0.15s ease, background-color 0.15s ease;
+}
+
+.back-button:hover {
+  background-color: var(--accent);
+  border-color: var(--accent);
+  color: var(--on-accent);
+  transform: translateY(-2px);
+  box-shadow: 0 12px 24px rgba(0, 0, 0, 0.3);
+}
+
+.back-button::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -60%;
+  width: 40%;
+  height: 100%;
+  background: linear-gradient(115deg, transparent, rgba(255, 255, 255, 0.5), transparent);
+  transform: skewX(-20deg);
+}
+
+.back-button:hover::after {
+  animation: shimmer-sweep 0.9s ease;
+}
+
+@keyframes shimmer-sweep {
+  from { left: -60%; }
+  to { left: 130%; }
+}
+
+.back-button:active {
+  transform: translateY(0);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .four { animation: none; }
+  .back-button:hover::after { animation: none; }
+}

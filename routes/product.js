@@ -1,6 +1,7 @@
-const express = require("express")
+import express from 'express'
+import products from "./data/productsJson.js"
+
 const router = express.Router()
-const products = require("./data/productsJson")
 
 router.get('/products', (req, res) => {
     res.status(200).json(products)
@@ -22,4 +23,4 @@ router.get('/product/:id', (req, res) => {
     }
 })
 
-module.exports = router
+export default router;

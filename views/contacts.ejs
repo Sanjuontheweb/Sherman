@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <link rel="icon" href="images/sherman-logo-title.png" type="image/icon type">
+    <title>Contact</title>
+
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="color-scheme" content="light dark">
+
+    <script>
+      try {
+        var savedTheme = localStorage.getItem('sherman-theme');
+        if (savedTheme) {
+          document.documentElement.setAttribute('data-theme', savedTheme);
+        }
+      } catch (e) {}
+    </script>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Anton&family=Inter:wght@400;500;600;700&family=Fraunces:ital@1&display=swap" rel="stylesheet">
+
+    <!-- Here are the CSS files for this page. -->
+    <link rel="stylesheet" href="stylesheets/shared/general.css">
+    <link rel="stylesheet" href="stylesheets/shared/sherman-header.css">
+    <link rel="stylesheet" href="stylesheets/pages/contacts.css">
+  </head>
+  <body>
+    <div class="main">
+      <div class="contact-eyebrow">[ get in touch ]</div>
+
+      <h1 class="contact-title">contact</h1>
+
+      <p class="contact-text">
+        Questions, bugs, or just want to say hi - find it all here.
+      </p>
+
+      <!-- Replace each href below with the real URL. -->
+      <div class="contact-links">
+        <a class="contact-link" href="https://github.com/Sanjuontheweb" target="_blank" rel="noopener">
+          <span class="contact-link-label">GitHub</span>
+          <span class="contact-link-sub">my profile</span>
+        </a>
+
+        <a class="contact-link" href="https://github.com/Sanjuontheweb/Sherman" target="_blank" rel="noopener">
+          <span class="contact-link-label">Fork</span>
+          <span class="contact-link-sub">this project</span>
+        </a>
+
+        <a class="contact-link" href="https://linkedin.com" target="_blank" rel="noopener">
+          <span class="contact-link-label">LinkedIn</span>
+          <span class="contact-link-sub">@me</span>
+        </a>
+
+        <a class="contact-link" href="mailto:hello@example.com">
+          <span class="contact-link-label">Email</span>
+          <span class="contact-link-sub">contact@me.com</span>
+        </a>
+      </div>
+
+      <a href="sherman" class="back-to-shop">&larr; sherman</a>
+    </div>
+  </body>
+</html>

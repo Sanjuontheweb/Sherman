@@ -1,0 +1,128 @@
+.order-header {
+  height: 72px;
+  padding-left: 30px;
+  padding-right: 30px;
+  background-color: var(--header-bg);
+  color: var(--ink);
+
+  display: flex;
+  justify-content: center;
+
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 1000;
+  border-bottom: 1px solid var(--line);
+}
+
+.header-content {
+  width: 100%;
+  max-width: 1100px;
+
+  display: flex;
+  align-items: center;
+}
+
+.order-header-left-section {
+  width: 150px;
+}
+
+/* The logo is an inline <svg>, filled with currentColor, so it
+   tracks --ink and needs no light/dark image swap. */
+.sherman-logo.site-logo {
+  width: 110px;
+  height: auto;
+  display: block;
+}
+
+.sherman-mobile-logo {
+  display: none;
+}
+
+@media (max-width: 575px) {
+  .order-header-left-section {
+    width: auto;
+  }
+
+  .sherman-logo.site-logo {
+    display: none;
+  }
+
+  .sherman-mobile-logo.site-logo {
+    display: block;
+    height: 28px;
+    width: auto;
+  }
+}
+
+.order-header-middle-section {
+  flex: 1;
+  flex-shrink: 0;
+  text-align: center;
+
+  font-family: var(--font-display);
+  font-size: 28px;
+  font-weight: 400;
+  letter-spacing: 0.02em;
+  margin-left: 37rem;
+
+  display: flex;
+  justify-content: center;
+  position: relative;
+}
+
+/* A small sliding underline beneath "orders", echoing the
+   accent underline on the hero's "[ shop the drop ]" link. */
+.order-header-middle-section::after {
+  content: "";
+  position: absolute;
+  left: 50%;
+  bottom: -6px;
+  width: 46px;
+  height: 2px;
+  background-color: var(--accent);
+  transform: translateX(-50%);
+  animation: underline-breathe 2.6s ease-in-out infinite;
+}
+
+@keyframes underline-breathe {
+  0%, 100% { width: 46px; opacity: 0.55; }
+  50% { width: 70px; opacity: 1; }
+}
+
+.return-to-home-link {
+  color: var(--accent);
+  font-family: var(--font-body);
+  font-size: 16px;
+  text-decoration: none;
+  cursor: pointer;
+  border-bottom: 1px solid transparent;
+}
+
+.return-to-home-link:hover {
+  border-bottom: 1px solid var(--accent);
+}
+
+@media (max-width: 1000px) {
+  .order-header-middle-section {
+    font-size: 21px;
+    margin-right: -100px;
+  }
+
+  .return-to-home-link {
+    font-size: 15px;
+  }
+}
+
+@media (max-width: 575px) {
+  .order-header-middle-section {
+    margin-left: 5px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .order-header-middle-section::after{
+    animation: none;
+  }
+}
