@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tracking</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Anton&family=Inter:wght@400;500;600;700&family=Fraunces:ital@1&display=swap" rel="stylesheet">
+
+    <style>
+        :root {
+            --font-display: "Anton", "Arial Narrow", sans-serif;
+            --font-body: "Inter", Arial, sans-serif;
+            --font-serif: "Fraunces", Georgia, serif;
+        }
+
+        :root {
+            --bg: #f7e7ce;
+            --surface: #fffaf1;
+            --header-bg: #f7e7ce;
+            --ink: #1c1210;
+            --muted: #6b5c50;
+            --line: #1c1210;
+
+            --accent: #c8432e;
+            --on-accent: #f7e7ce;
+            --icon-filter: brightness(0);
+
+            --card-bg-cards: #1c1210;
+            --card-bg: #1c1210;
+            --card-ink: #f3e9db;
+            --card-muted: #b6a99a;
+            --card-line: #3a2c26;
+            }
+
+        @media (prefers-color-scheme: dark) {
+        :root:not([data-theme="light"]) {
+            --bg: #180307;
+            --surface: #22060c;
+            --header-bg: #180307;
+            --ink: #f3e6d8;
+            --muted: #b79c8c;
+            --line: #f3e6d8;
+
+            --accent: #ff7a5c;
+            --on-accent: #180307;
+            --icon-filter: brightness(0) invert(1);
+
+            --card-bg-cards: #f3cea6;
+            --card-bg: #f3e6d8;
+            --card-ink: #1c1210;
+            --card-muted: #6b5c50;
+            --card-line: #d9c8b5;
+        }
+            }
+
+        :root[data-theme="dark"] {
+            --bg: #180307;
+            --surface: #22060c;
+            --header-bg: #180307;
+            --ink: #f3e6d8;
+            --muted: #b79c8c;
+            --line: #f3e6d8;
+
+            --accent: #ff7a5c;
+            --on-accent: #180307;
+            --icon-filter: brightness(0) invert(1);
+
+            --card-bg-cards: #f3cea6;
+            --card-bg: #f3e6d8;
+            --card-ink: #1c1210;
+            --card-muted: #6b5c50;
+            --card-line: #d9c8b5;
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        html, body {
+            height: 100%;
+            margin: 0;
+        }
+
+        body {
+            background-color: var(--bg);
+            font-family: var(--font-body);
+            color: var(--ink);
+
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+
+            min-height: 100vh;
+            padding: 24px;
+        }
+
+        .text {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            max-width: 560px;
+
+            opacity: 0;
+            transform: translateY(16px);
+            animation: rise-in 0.6s cubic-bezier(.2, .8, .2, 1) 0.1s forwards;
+        }
+
+        .eyebrow {
+            font-family: var(--font-body);
+            font-size: 13px;
+            letter-spacing: 0.04em;
+            color: var(--muted);
+            margin-bottom: 14px;
+        }
+
+        .sub {
+            font-family: var(--font-display);
+            text-transform: lowercase;
+            font-weight: 400;
+            font-size: clamp(2.2rem, 6vw, 4.2rem);
+            line-height: 1.05;
+            color: var(--ink);
+            margin: 0 0 18px;
+        }
+
+        .hint {
+            font-family: var(--font-body);
+            font-size: 15px;
+            line-height: 1.5;
+            color: var(--muted);
+            margin: 0;
+        }
+
+        .underline {
+            width: 46px;
+            height: 2px;
+            background-color: var(--accent);
+            margin-top: 28px;
+            animation: underline-breathe 2.6s ease-in-out infinite;
+        }
+
+        @keyframes rise-in {
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes underline-breathe {
+            0%, 100% { width: 46px; opacity: 0.55; }
+            50% { width: 70px; opacity: 1; }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            .text {
+                opacity: 1;
+                transform: none;
+                animation: none;
+            }
+
+            .underline {
+                animation: none;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="text">
+        <span class="eyebrow">[ order tracking ]</span>
+        <p class="sub">Welcome, please track your order through appropriate route</p>
+        <p class="hint">Go to the orders page and track the required package.</p>
+        <div class="underline" aria-hidden="true"></div>
+    </div>
+</body>
+</html>

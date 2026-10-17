@@ -1,6 +1,3 @@
-/* Theme colours, fonts and the header live in
-   sherman-header.css (shared), so every page stays in sync. */
-
 body {
   font-family: var(--font-body);
   color: var(--ink);
@@ -31,14 +28,6 @@ select:focus-visible {
   place-items: center;
 }
 
-/* ===========================================================
-   HERO
-   A full-page typographic front, built the way a magazine
-   cover is: a huge ghost wordmark behind, a solid wordmark
-   in front, a bold two-line claim, and one small call to
-   action pinned near the bottom, on top of a plain diagonal
-   split between the page colour and ink.
-   =========================================================== */
 .hero {
   position: relative;
   overflow: hidden;
@@ -54,14 +43,6 @@ select:focus-visible {
   clip-path: polygon(58% 0, 100% 0, 100% 100%, 46% 100%);
 }
 
-/* An original flat-illustration portrait (not a photo of a
-   real or identifiable person) - blonde hair, sunglasses,
-   black leather jacket, on its own dark backdrop. Because its
-   background is baked into the image, it reads the same in
-   both themes rather than flipping colour like a mask would -
-   that's expected for a photo-style asset. Swap the src for a
-   licensed photo whenever you have one; the sizing below will
-   frame it the same way. */
 .hero-figure {
   position: absolute;
   right: 12%;
@@ -194,9 +175,6 @@ select:focus-visible {
     text-align: left;
     padding: 0 5vw;
     margin-top: 18px;
-    /* On the stacked mobile layout the claim sits on the
-       page background, not the dark panel, so it needs the
-       page's ink colour instead of the panel's cream one. */
     color: var(--ink);
   }
 
@@ -210,9 +188,6 @@ select:focus-visible {
   }
 }
 
-/* ===========================================================
-   SECTION HEADING (sits between the hero and the products)
-   =========================================================== */
 .header-text {
   font-family: var(--font-body);
   font-size: 13px;
@@ -223,21 +198,6 @@ select:focus-visible {
   padding: 30px 5vw 6px;
 }
 
-/* ===========================================================
-   PRODUCTS
-   Cards are a fixed dark, editorial surface regardless of the
-   page's light/dark theme (--card-bg / --card-ink), same as
-   the rest of the hero's dark panel.
-
-   Layout: CSS columns (a "waterfall"), not flex + transform.
-   Real product titles wrap to one or two lines depending on
-   their length, so cards are never a uniform height - a fixed
-   translateY stagger will eventually push a short card up into
-   the row below it, which was the overlap in production. Columns
-   stack each card under the real height of the one before it in
-   the same column, so a zig-zag offset can never cause overlap,
-   whatever the content.
-   =========================================================== */
 .products-grid {
   column-count: 5;
   column-gap: 10px;
@@ -294,16 +254,11 @@ select:focus-visible {
   text-transform: uppercase;
 }
 
-/* zig-zag stagger: every card after the first in a column
-   starts a little lower or higher than the default gap. These
-   only ever add to the margin, so columns never collide. */
 .product-container:nth-child(5n + 2) { --stagger: 32px; }
 .product-container:nth-child(5n + 3) { --stagger: 13px; }
 .product-container:nth-child(5n + 4) { --stagger: 34px; }
 .product-container:nth-child(5n + 5) { --stagger: 4px; }
 
-/* Hover: bounce for as long as the pointer stays over the
-   card, then settle back down the moment it leaves. */
 .product-container:hover {
   box-shadow: 0 14px 24px -10px rgba(0, 0, 0, 0.35);
   animation: card-bounce 2.8s ease-in-out infinite;
@@ -363,10 +318,6 @@ select:focus-visible {
   cursor: pointer;
 }
 
-/* ===========================================================
-   FOOTER
-   Brown, independent of the light/dark theme
-   =========================================================== */
 .site-footer {
   background-color: rgb(97, 33, 24);
   color: #d9d6ef;

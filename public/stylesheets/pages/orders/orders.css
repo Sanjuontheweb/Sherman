@@ -1,8 +1,3 @@
-/* Theme tokens (--bg, --ink, --card-bg, etc.) come from
-   stylesheets/shared/sherman-header.css, which this page already
-   loads before this file. Don't redeclare them here — a duplicate
-   copy drifts from the real one and silently wins the cascade. */
-
 body {
   background: var(--bg);
   font-family: var(--font-body);
@@ -46,7 +41,7 @@ body {
   row-gap: 50px;
 }
 
-.order-header {
+.order-card-header {
   background-color: var(--card-bg);
   border: 1px solid var(--card-line);
 
@@ -60,9 +55,11 @@ body {
   border-radius: 0;
 }
 
-.order-header-left-section {
+.order-card-header-left-section {
   display: flex;
-  flex-shrink: 0;
+  align-items: baseline;
+  flex-wrap: wrap;
+  gap: 8px 45px;
 }
 
 .order-header-label {
@@ -72,18 +69,22 @@ body {
   font-size: 12px;
   letter-spacing: 0.04em;
   margin-right: 6px;
-  align-self: center;
 }
 
 .order-date,
 .order-total {
-  margin-right: 45px;
+  display: flex;
+  align-items: baseline;
+  gap: 6px;
   font-family: var(--font-display);
   text-transform: lowercase;
   font-size: 18px;
 }
 
 .order-header-right-section {
+  display: flex;
+  align-items: baseline;
+  gap: 6px;
   flex-shrink: 1;
 }
 
@@ -93,14 +94,14 @@ body {
 }
 
 @media (max-width: 575px) {
-  .order-header {
+  .order-card-header {
     flex-direction: column;
     align-items: start;
     line-height: 23px;
     padding: 15px;
   }
 
-  .order-header-left-section {
+  .order-card-header-left-section {
     flex-direction: column;
   }
 
@@ -121,20 +122,68 @@ body {
   }
 }
 
-.order-details-grid {
-  padding: 40px 25px;
+.order-container {
+  perspective: 1000px;
+
+  opacity: 0;
+  transform: translateY(24px) rotateX(-6deg);
+  transform-origin: top center;
+  animation: order-rise 0.6s cubic-bezier(.2, .8, .2, 1) forwards;
+}
+
+.orders-grid .order-container:nth-child(1) { animation-delay: 0.05s; }
+.orders-grid .order-container:nth-child(2) { animation-delay: 0.15s; }
+.orders-grid .order-container:nth-child(3) { animation-delay: 0.25s; }
+.orders-grid .order-container:nth-child(4) { animation-delay: 0.35s; }
+.orders-grid .order-container:nth-child(n+5) { animation-delay: 0.45s; }
+
+@keyframes order-rise {
+  to { opacity: 1; transform: translateY(0) rotateX(0deg); }
+}
+
+.order-card-header,
+.order-products {
+  transition: transform 0.35s ease, box-shadow 0.35s ease;
+}
+
+.order-container:hover .order-card-header,
+.order-container:hover .order-products {
+  transform: translateY(-4px) rotateX(1.2deg);
+  box-shadow: 0 20px 40px -20px rgba(0, 0, 0, 0.45);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .order-container {
+    opacity: 1;
+    transform: none;
+    animation: none;
+  }
+
+  .order-container:hover .order-card-header,
+  .order-container:hover .order-products {
+    transform: none;
+  }
+}
+
+.order-products {
   border: 1px solid var(--card-line);
   border-top: none;
   background-color: var(--card-bg);
   color: var(--card-ink);
+  z-index: 0;
+}
 
+.order-details-grid {
+  padding: 40px 25px;
   display: grid;
   grid-template-columns: 110px 1fr 220px;
   column-gap: 35px;
-  row-gap: 60px;
   align-items: center;
+  border-bottom: 1px solid var(--card-line);
+}
 
-  z-index: 0;
+.order-details-grid:last-child {
+  border-bottom: none;
 }
 
 @media (max-width: 800px) {
@@ -192,11 +241,11 @@ body {
   font-size: 13px;
   letter-spacing: 0.03em;
   text-transform: uppercase;
-  width: 150px;
+  width: 40px;
   height: 38px;
   border-radius: 999px;
 
-  padding: 5px 7px;
+  padding: 5px 2px;
 
   display: flex;
   align-items: center;
@@ -237,7 +286,6 @@ body {
 
 .buy-again-icon {
   width: 18px;
-  margin-right: 12px;
   filter: brightness(0) saturate(100%) invert(72%) sepia(9%) saturate(300%);
 }
 
@@ -247,14 +295,16 @@ body {
 
 .product-actions {
   align-self: start;
+  font-family: var(--font-body);
 }
 
 .track-package-button {
   width: 100%;
   font-size: 13px;
+  font-family: var(--font-body);
   letter-spacing: 0.03em;
   text-transform: uppercase;
-  font-weight: 400;
+  font-weight: 800;
   padding: 10px;
   border-radius: 999px;
 
@@ -271,6 +321,17 @@ body {
   background: transparent;
 }
 
+.orders-empty {
+  font-family: var(--font-body);
+  color: var(--card-ink);
+  font-size: 30px;
+  font-weight: 700;
+
+  position: absolute;
+  top: 20%;
+  left: 30%;
+}
+
 @media (max-width: 800px) {
   .buy-again-button {
     margin-bottom: 10px;
@@ -283,6 +344,13 @@ body {
 
   .track-package-button {
     width: 140px;
+  }
+
+  .orders-empty {
+      font-size: 25px;
+      font-weight: 700;
+      top: 15%;
+      left: 19%;
   }
 }
 
@@ -318,6 +386,13 @@ body {
   .track-package-button {
     width: 100%;
     padding: 12px;
+  }
+
+  .orders-empty {
+      font-size: 17px;
+      font-weight: 500;
+      top: 8%;
+      left: 12%;
   }
 }
 

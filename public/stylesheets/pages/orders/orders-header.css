@@ -17,19 +17,15 @@
 }
 
 .header-content {
-  width: 100%;
-  max-width: 1100px;
-
   display: flex;
   align-items: center;
+  gap: 40.5rem;
 }
 
 .order-header-left-section {
-  width: 150px;
+  flex-shrink: 0;
 }
 
-/* The logo is an inline <svg>, filled with currentColor, so it
-   tracks --ink and needs no light/dark image swap. */
 .sherman-logo.site-logo {
   width: 110px;
   height: auto;
@@ -40,40 +36,16 @@
   display: none;
 }
 
-@media (max-width: 575px) {
-  .order-header-left-section {
-    width: auto;
-  }
-
-  .sherman-logo.site-logo {
-    display: none;
-  }
-
-  .sherman-mobile-logo.site-logo {
-    display: block;
-    height: 28px;
-    width: auto;
-  }
-}
-
 .order-header-middle-section {
-  flex: 1;
-  flex-shrink: 0;
-  text-align: center;
-
   font-family: var(--font-display);
+  text-transform: lowercase;
   font-size: 28px;
   font-weight: 400;
   letter-spacing: 0.02em;
-  margin-left: 37rem;
-
-  display: flex;
-  justify-content: center;
+  
   position: relative;
 }
 
-/* A small sliding underline beneath "orders", echoing the
-   accent underline on the hero's "[ shop the drop ]" link. */
 .order-header-middle-section::after {
   content: "";
   position: absolute;
@@ -104,10 +76,20 @@
   border-bottom: 1px solid var(--accent);
 }
 
+@media (max-width: 1300px) {
+  .header-content {
+    gap: 40rem;
+  }
+}
+
 @media (max-width: 1000px) {
   .order-header-middle-section {
     font-size: 21px;
-    margin-right: -100px;
+    margin-left: 1rem;
+  }
+
+  .header-content{
+    gap: 40rem;
   }
 
   .return-to-home-link {
@@ -116,8 +98,22 @@
 }
 
 @media (max-width: 575px) {
-  .order-header-middle-section {
-    margin-left: 5px;
+  .order-header-left-section {
+    width: auto;
+  }
+
+  .header-content{
+    gap: 23rem;
+  }
+
+  .sherman-logo.site-logo {
+    display: none;
+  }
+
+  .sherman-mobile-logo.site-logo {
+    display: block;
+    height: 28px;
+    width: auto;
   }
 }
 

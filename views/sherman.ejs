@@ -2,18 +2,11 @@
 <html>
   <head>
     <link rel="icon" href="images/sherman-logo-title.png" type="image/png">
-    <title>Sherman</title>
+    <title>Sherman - The Evergreen</title>
 
-    <!-- This code is needed for responsive design to work.
-      (Responsive design = make the website look good on
-      smaller screen sizes like a phone or a tablet). -->
     <meta name="viewport" content="width=device-width, initial-scale=1">
-
-    <!-- The page supports both light and dark mode. -->
     <meta name="color-scheme" content="light dark">
 
-    <!-- Apply the visitor's saved light/dark choice before the
-      page paints, so it doesn't flash the wrong theme. -->
     <script>
       try {
         var savedTheme = localStorage.getItem('sherman-theme');
@@ -23,14 +16,10 @@
       } catch (e) {}
     </script>
 
-    <!-- Anton (headlines), Inter (everything else), Fraunces
-      (footer headings only). The logo itself is a hand-drawn
-      SVG path below, not a web font. -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Anton&family=Inter:wght@400;500;600;700&family=Fraunces:ital,wght@0,500;1,500&display=swap" rel="stylesheet">
 
-    <!-- Here are the CSS files for this page. -->
     <link rel="stylesheet" href="stylesheets/shared/general.css">
     <link rel="stylesheet" href="stylesheets/shared/sherman-header.css">
     <link rel="stylesheet" href="stylesheets/pages/sherman.css">
@@ -49,7 +38,9 @@
       </div>
 
       <div class="sherman-header-middle-section">
-        <input class="search-bar" type="text" placeholder="Search">
+        <input class="search-bar" type="text" placeholder="Search" data-search>
+
+        <div class="search-results js-search-results"></div>
 
         <button class="search-button" aria-label="Search">
           <img class="search-icon" src="images/icons/search-icon.png" alt="">
@@ -72,11 +63,8 @@
       </div>
     </div>
 
-    <!-- ===========================================================
-      HERO: a full-page typographic front. No photo is used (none
-      was supplied) - the "split" is a plain ink panel on the
-      right, same idea as the reference's torn photo halves.
-      =========================================================== -->
+    <div class="search-backdrop js-search-backdrop"></div>
+
     <div class="hero">
       <div class="hero-split" aria-hidden="true">
         <img class="hero-figure" src="images/hero-figure.png" alt="">
@@ -109,7 +97,7 @@
           <h3>Shop</h3>
           <ul>
             <li><a href="orders">Orders</a></li>
-            <li><a href="tracking">Track Order</a></li>
+            <li><a href="orders">Track Order</a></li>
             <li><a href="#products">All Products</a></li>
           </ul>
         </div>
@@ -127,7 +115,7 @@
           <h3>Connect</h3>
           <ul>
             <li><a href="https://linkedin.com">LinkedIn</a></li>
-            <li><a href="https://github.com/Sanjuontheweb">Github</a></li>
+            <li><a href="https://github.com/Sanjuontheweb" target="_blank">Github</a></li>
             <li><a href="https://sanjuontheweb.github.io/The-Portfolio/" target="_blank">Portfolio</a></li>
           </ul>
         </div>
@@ -139,14 +127,9 @@
       </div>
     </footer>
 
-    <script>
-      const names=["Basic Cotton Tee 2 Pack","Waterproof Rain Jacket with Hood","Sherman Sneakers","Ceramic Mug Set","Blender 1200W","Yoga Mat","Wireless Earbuds","Denim Tote Bag","Desk Lamp","Sunglasses","Backpack","Sports Socks 6 pack","Water Bottle","Notebook Set","Cap"];
-      document.querySelector('.js-products-grid').innerHTML=names.map((n,i)=>`<div class="product-container"><div class="product-image-container"><img class="product-image" src="images/p.png"></div><div class="product-name limit-text-to-2-lines">${n}</div><div class="product-rating-container"><div class="product-rating-stars">&#9733;&#9733;&#9733;&#9733;&#9734;</div><div class="product-rating-count">${87+i*13} reviews</div></div><div class="product-price">$${(10.9+i*3.05).toFixed(2)}</div><div class="product-quantity-container"><select><option>1</option><option>2</option></select></div><div class="product-spacer"></div><div class="added-to-list">Added</div><button class="add-to-list-button">Add to Cart</button></div>`).join("");
-    </script>
-
     <script type = "module" src = "javascripts/sherman.js"></script>
+    <script type = "module" src = "javascripts/search.js"></script>
 
-    <!-- Light / dark toggle. Remembers the choice on this device. -->
     <script>
       document.querySelector('.js-theme-toggle').addEventListener('click', function () {
         var root = document.documentElement;

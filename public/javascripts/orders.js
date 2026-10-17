@@ -1,97 +1,81 @@
-import {list, loadFromStorage, addToList} from './lists.js';
-import {products, getProduct} from './products.js'; 
-import dayjs from 'https://unpkg.com/dayjs@1.11.10/esm/index.js';
-import { renderPaymentSummary } from "./paymentSummary.js";
-import { getDeliveryOption } from "./deliveryOption.js";
+import { addToList } from './lists.js';
 import { updateListQuantity } from './productView.js';
+import { calcuateDeliveryDate } from './tracking.js';
 
-export const orders = JSON.parse(localStorage.getItem('orders')) || [];
+export async function renderOrders() {
+  const response = await fetch(`/api/backend/orders/`)
+  
+  const orders = await response.json()
 
-export function addOrders(order) {
-  orders.unshift(order);
-  saveToStorage();
-}
+  const deliveryDate = await calcuateDeliveryDate();
 
-export function saveToStorage() {
-  localStorage.setItem('orders', JSON.stringify(orders));
-}
-
-export function renderOrders() {
-  let ordersHTML = '';
-
-  const paymentSummaryies = renderPaymentSummary();
-  const total = paymentSummaryies.total;
   updateListQuantity();
 
-  orders.forEach((order) => {
-    const productId = order.productId;
-    const mathingProduct = getProduct(productId);
+  const grid = document.querySelector('.js-orders-grid')
 
-    const today = dayjs();
-    const deliveryDate = today.add(
-      getDeliveryOption(order.deliveryOptionId).deliveryDays,
-      'days'
-    );
-    const dateString = deliveryDate.format('MMMM D');
-
-  ordersHTML += `
+  grid.innerHTML = orders.map(order => `
     <div class="order-container">
-      <div class="order-header">
-        <div class="order-header-left-section">
+      <div class="order-card-header">
+        <div class="order-card-header-left-section">
           <div class="order-date">
             <div class="order-header-label">Order Placed:</div>
-            <div>${order.orderTime}</div>
+            <div>${order.createdAt.split('T')[0]}</div>
           </div>
           <div class="order-total">
             <div class="order-header-label">Total:</div>
-            <div>₹ ${order.totalCost}</div>
+            <div>₹ ${order.total}</div>
           </div>
         </div>
 
         <div class="order-header-right-section">
           <div class="order-header-label">Order ID:</div>
-          <div>${order.id}</div>
+          <div>${order._id}</div>
         </div>
       </div>
 
-      <div class="order-details-grid">
-        <div class="product-image-container">
-          <img src="${mathingProduct.image}">
-        </div>
+      <div class="order-products">
+        ${order.productObj.map(product => {
+          return `
 
-        <div class="product-details">
-          <div class="product-name">
-            ${mathingProduct.name}
+          <div class="order-details-grid">
+            <div class="product-image-container">
+              <img src="${product.image}">
+            </div>
+
+            <div class="product-details">
+              <div class="product-name">
+                ${product.name}
+              </div>
+              <div class="product-delivery-date">
+                Arriving on: ${deliveryDate.at(-1)}
+              </div>
+              <div class="product-quantity">
+                Quantity: ${product.quantity}
+              </div>
+              <button class="buy-again-button button-primary js-buy-again" data-product-id=${product.id}>
+                <img class="buy-again-icon" src="images/icons/buy-again.png">
+              </button>
+            </div>
+
+            <div class="product-actions">
+              <a href="/tracking/order?productId=${product.id}&quantity=${product.quantity}">
+                <button class="track-package-button button-secondary">
+                  Track package
+                </button>
+              </a>
+            </div>
           </div>
-          <div class="product-delivery-date">
-            Arriving on: ${order.estimatedDeliveryTime}
-          </div>
-          <div class="product-quantity">
-            Quantity: ${order.quantity}
-          </div>
-          <button class="buy-again-button button-primary js-buy-again">
-            <img class="buy-again-icon" src="images/icons/buy-again.png">
-            <span class="buy-again-message">Buy it again</span>
-          </button>
-        </div>
+      `;}).join('')}
+      </div>
+    </div>
+  `).join('')
 
-        <div class="product-actions">
-          <a href="tracking.html?orderId=${order.id}&productId=${order.productId}">
-            <button class="track-package-button button-secondary">
-              Track package
-            </button>
-          </a>
-        </div>
-  `
-
-  document.querySelector('.js-orders-grid').innerHTML = ordersHTML;
-
-document.querySelectorAll('.js-buy-again').forEach((buttonn) => {
-  buttonn.addEventListener('click', () => {
-    addToList(productId);
-    window.location.href = "/checkout";
+  document.querySelectorAll('.js-buy-again').forEach((buttonn) => {
+    buttonn.addEventListener('click', () => {
+      addToList(buttonn.dataset.productId);
+      window.location.href = "/checkout";
+    })
   })
-})
-
-})
 }
+
+renderOrders()

@@ -1,25 +1,9 @@
-/* ---------------------------------------------------------
-   FONTS
-   Anton = big display type (hero, product titles, wordmark).
-   Inter = everything else (nav, body, buttons, labels).
-   Fraunces = the footer's column headings only.
-   All three are loaded from Google Fonts in sherman.ejs.
-   The logo itself is drawn as an SVG path (see .site-logo
-   below) rather than a web font, so there's no font file to
-   ship and no license question for the live site.
-   --------------------------------------------------------- */
 :root {
   --font-display: "Anton", "Arial Narrow", sans-serif;
   --font-body: "Inter", Arial, sans-serif;
   --font-serif: "Fraunces", Georgia, serif;
 }
 
-/* ---------------------------------------------------------
-   THEME TOKENS
-   Light = tones of #f7e7ce.  Dark = tones of #2a050b.
-   Follows the visitor's system setting; the toggle button
-   sets data-theme="light" or "dark" on <html> to override.
-   --------------------------------------------------------- */
 :root {
   --bg: #f7e7ce;
   --surface: #fffaf1;
@@ -32,8 +16,6 @@
   --on-accent: #f7e7ce;
   --icon-filter: brightness(0);
 
-  /* Product cards read as a fixed dark, editorial surface in
-     both themes, so they hold their contrast either way. */
   --card-bg-cards: #1c1210;
   --card-bg: #1c1210;
   --card-ink: #f3e9db;
@@ -81,9 +63,6 @@
   --card-line: #d9c8b5;
 }
 
-/* ---------------------------------------------------------
-   HEADER
-   --------------------------------------------------------- */
 .sherman-header {
   background-color: var(--header-bg);
   color: var(--ink);
@@ -135,9 +114,6 @@
   outline-offset: 3px;
 }
 
-/* The logo is an inline <svg class="site-logo"> in the HTML,
-   filled with currentColor, so it always matches --ink and
-   never needs a light/dark image swap. */
 .site-logo {
   display: block;
   height: 22px;
@@ -172,6 +148,7 @@
   margin-left: 24px;
   margin-right: 24px;
   display: flex;
+  position: relative;
 }
 
 .search-bar {
@@ -203,9 +180,6 @@
   flex-shrink: 0;
 }
 
-/* Tinted with --icon-filter, which is plain black in light
-   mode and inverted to cream in dark mode (see theme tokens
-   above), so a single asset works in both themes. */
 .search-icon {
   height: 16px;
   margin-top: 2px;
@@ -220,7 +194,6 @@
   justify-content: end;
 }
 
-/* Light / dark switch: a plain ring that fills solid on hover. */
 .theme-toggle {
   align-self: center;
   flex-shrink: 0;
@@ -284,8 +257,6 @@
 }
 
 @media (max-width: 575px) {
-  /* Phones: logo and buttons on the first row, the search bar
-     drops to its own full-width row underneath. */
   .sherman-header {
     flex-wrap: wrap;
     height: auto;
@@ -303,4 +274,65 @@
   .sherman-header-right-section {
     min-width: 0;
   }
+}
+
+.search-backdrop {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background-color: rgba(0, 0, 0, 0.55);
+  z-index: 2;
+}
+
+.search-backdrop.is-visible {
+  display: block;
+}
+
+.search-results {
+  display: none;
+  position: absolute;
+  top: 100%;
+  left: 0;
+  right: 36px;
+  margin-top: 1px;
+
+  background-color: var(--card-bg-cards);
+  border: 1px solid var(--card-line);
+
+  max-height: 70vh;
+  overflow-y: auto;
+
+  z-index: 4;
+}
+
+.search-results.is-visible {
+  display: block;
+}
+
+.search-result-tile {
+  display: block;
+  width: 100%;
+  box-sizing: border-box;
+  text-align: left;
+
+  padding: 14px 18px;
+  background: none;
+  border: none;
+  border-bottom: 1px solid var(--card-line);
+
+  font-family: var(--font-display);
+  font-size: 18px;
+  line-height: 1.1;
+  text-transform: uppercase;
+  color: var(--card-ink);
+  cursor: pointer;
+}
+
+.search-result-tile:last-child {
+  border-bottom: none;
+}
+
+.search-result-tile:hover,
+.search-result-tile:focus-visible {
+  background-color: var(--card-line);
 }

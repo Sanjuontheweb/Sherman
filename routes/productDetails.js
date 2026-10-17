@@ -4,7 +4,7 @@ import express from "express";
 const router = express.Router();
 
 router.get('/', (req, res) => {
-  res.render('details')
+  res.render('details-landing')
 })
 
 router.get('/:id', (req, res) => {

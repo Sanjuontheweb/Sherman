@@ -4,17 +4,9 @@
     <link rel="icon" href="images/sherman-logo-title.png" type="image/png">
     <title>Checkout</title>
 
-    <!-- This code is needed for responsive design to work.
-      (Responsive design = make the website look good on
-      smaller screen sizes like a phone or a tablet). -->
     <meta name="viewport" content="width=device-width, initial-scale=1">
-
-    <!-- The page supports both light and dark mode, matching
-      the rest of the site. -->
     <meta name="color-scheme" content="light dark">
 
-    <!-- Apply the visitor's saved light/dark choice before the
-      page paints, so it doesn't flash the wrong theme. -->
     <script>
       try {
         var savedTheme = localStorage.getItem('sherman-theme');
@@ -24,15 +16,11 @@
       } catch (e) {}
     </script>
 
-    <!-- Anton (headlines) + Inter (everything else) - the same
-      pairing as the rest of the site. -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Anton&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 
-    <!-- Here are the CSS files for this page. sherman-header.css
-      is shared site-wide: it carries the colour/font tokens and
-      the light/dark theme, same as every other page. -->
+
     <link rel="stylesheet" href="stylesheets/shared/general.css">
     <link rel="stylesheet" href="stylesheets/shared/sherman-header.css">
     <link rel="stylesheet" href="stylesheets/pages/checkout/checkout-header.css">

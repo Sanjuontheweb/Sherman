@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <link rel="icon" href="images/sherman-logo-title.png" type="image/icon type">
+    <title>Size Chart</title>
+
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="color-scheme" content="light dark">
+
+    <script>
+      try {
+        var savedTheme = localStorage.getItem('sherman-theme');
+        if (savedTheme) {
+          document.documentElement.setAttribute('data-theme', savedTheme);
+        }
+      } catch (e) {}
+    </script>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Anton&family=Inter:wght@400;500;600;700&family=Fraunces:ital@1&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="stylesheets/shared/general.css">
+    <link rel="stylesheet" href="stylesheets/shared/sherman-header.css">
+    <link rel="stylesheet" href="stylesheets/pages/chart.css">
+  </head>
+  <body>
+    <div class="main">
+      <div class="chart-eyebrow">[ size chart ]</div>
+
+      <h1 class="chart-title">Clothing Size Chart</h1>
+
+      <p class="chart-image">
+        <img class="size-chart" src="images/clothing-size-chart.jpg" />
+      </p>
+
+      <a href="sherman/#products" class="back-to-shop">&larr; products</a>
+    </div>
+  </body>
+</html>

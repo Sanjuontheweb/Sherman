@@ -45,18 +45,18 @@ export function addToList(productId) {
     saveToLocalStorage();
   }
     
-    export function removeList(productId) {
-      const newList = [];
+export function removeList(productId) {
+  const newList = [];
 
-      list.forEach((item) => {
-        if (item.productId !== productId) {
-          newList.push(item);
-        }
-      });
-
-      list = newList;
-      saveToLocalStorage();
+  list.forEach((item) => {
+    if (item.productId !== productId) {
+      newList.push(item);
     }
+  });
+
+  list = newList;
+  saveToLocalStorage();
+}
 
 export function updateDeliveryOptions (productId, deliveryOptionId) {
   let mathingItem;
@@ -71,7 +71,3 @@ export function updateDeliveryOptions (productId, deliveryOptionId) {
 
     saveToLocalStorage();
 }
-
-/* normalizing - an array conists of the products data, then to access it in another page, u just get the productid as it contains the rest of the data, and can save time/complication 
-
-To save the list in localStorage, u need to use it and stringify it as localS only supports strings, while getting it *.getItem() out convert it back by JSON.parse() and set a default value */

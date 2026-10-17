@@ -1,13 +1,13 @@
 import express from 'express'
 import path from 'path'
-import { fileURLToPath } from "url"
 import dotenv from 'dotenv';
 import productRouter from "./routes/product.js"
-// import backendRouter from "./routes/database.js"
-import products from "./routes/data/productsJson.js"
+import backendRouter from "./routes/database.js"
+import trackingRouter from "./routes/trackingRoute.js"
 import productDetailsRouter from "./routes/productDetails.js"
+import { connectToMongoDB } from './server/mongodb/baseConnect.js';
 
-dotenv.config()
+dotenv.config({ quiet: true })
 const port = process.env.PORT;
 
 const app = express()
@@ -31,10 +31,6 @@ app.get('/orders', (req, res) => {
     res.render(('orders'))
 })
 
-app.get('/tracking', (req, res) => {
-    res.render(('tracking'))
-})
-
 app.get('/checkout', (req, res) => {
     res.render(('checkout'))
 })
@@ -51,6 +47,14 @@ app.get('/privacy', (req, res) => {
     res.render(('policy'))
 })
 
+app.get('/sizeChartLink', (req, res) => {
+    res.render('chart')
+})
+
+app.get('/warranty', (req, res) => {
+    res.sendFile(path.resolve('public/images/appliance-warranty.png'));
+})
+
 app.get('/404', (req, res) => {
     res.render('404')
 })
@@ -58,7 +62,10 @@ app.get('/404', (req, res) => {
 //api routes
 app.use('/api/data', productRouter)
 app.use('/details', productDetailsRouter)
-// app.use('api/backend/orders', backendRouter)
+app.use('/tracking', trackingRouter)
+
+await connectToMongoDB()
+app.use('/api/backend/orders', backendRouter)
 
 //handle 404 errors
 app.use(function(req, res, next) {
@@ -76,6 +83,4 @@ app.use(function(req, res, next) {
 app.listen(port)
 
 // create users, and auth route with jwt
-// try orders now
 // role based access
-// search function

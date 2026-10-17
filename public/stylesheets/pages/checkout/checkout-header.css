@@ -72,8 +72,6 @@
   position: relative;
 }
 
-/* A small sliding underline beneath "checkout", echoing the
-   accent underline on the hero's "[ shop the drop ]" link. */
 .checkout-header-middle-section::after {
   content: "";
   position: absolute;

@@ -1,7 +1,3 @@
-/* Theme tokens (--bg, --ink, --accent, fonts, etc.) come from
-   stylesheets/shared/sherman-header.css, which this page loads
-   before this file. */
-
 html, body {
   height: 100%;
   margin: 0;

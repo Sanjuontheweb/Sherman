@@ -77,10 +77,6 @@ body {
   overflow: hidden;
 }
 
-/* ===========================================================
-   Stage: same ghost-wordmark trick as the hero/product pages,
-   so a lost visitor still feels like they're on the site.
-   =========================================================== */
 .error-stage {
   position: relative;
   isolation: isolate;

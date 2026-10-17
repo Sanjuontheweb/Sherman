@@ -28,8 +28,6 @@
   width: 150px;
 }
 
-/* The logo is an inline <svg>, filled with currentColor, so it
-   tracks --ink and needs no light/dark image swap. */
 .sherman-logo.site-logo {
   width: 110px;
   height: auto;
@@ -73,8 +71,6 @@
   position: relative;
 }
 
-/* A small sliding underline beneath "checkout", echoing the
-   accent underline on the hero's "[ shop the drop ]" link. */
 .tracking-header-middle-section::after {
   content: "";
   position: absolute;

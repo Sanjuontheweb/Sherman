@@ -1,7 +1,3 @@
-/* Theme tokens (--bg, --ink, --card-bg, etc.) and fonts come from
-   stylesheets/shared/sherman-header.css, which this page loads
-   before this file. */
-
 html, body {
   height: 100%;
   margin: 0;
@@ -22,7 +18,7 @@ body {
   max-width: 900px;
   width: 100%;
   margin: 0 auto;
-  padding: 0 30px;
+  padding: 72px 30px 0;
 
   display: flex;
   align-items: center;
@@ -45,7 +41,7 @@ body {
 .back-to-orders-link {
   position: absolute;
   top: 34px;
-  left: 20;
+  z-index: 5;
   text-decoration: none;
 }
 
@@ -72,11 +68,6 @@ body {
   border-color: var(--ink);
 }
 
-/* ===========================================================
-   TOP 75% - the order itself, staged the same way a single
-   product page is: a faint watermark + soft glow behind a
-   floating product shot.
-   =========================================================== */
 .tracking-stage {
   flex: 0 0 75%;
   min-height: 0;
@@ -126,7 +117,7 @@ body {
   font-size: 13px;
   letter-spacing: 0.04em;
   color: var(--muted);
-  margin-bottom: 14px;
+  margin-bottom: 2.5rem;
 }
 
 .product-image {
@@ -166,22 +157,15 @@ body {
   font-family: var(--font-body);
   font-size: 15px;
   color: var(--muted);
-  margin-bottom: 3px;
+  margin-bottom: 15px;
 }
 
-.product-info:first-of-type {
-  color: var(--ink);
-  font-weight: 600;
-  font-size: 17px;
+.product-quantity {
+  font-family: var(--font-body);
+  font-size: 15px;
+  color: var(--muted);
 }
 
-/* ===========================================================
-   BOTTOM 25% - the tracking bar. A recessed track, a glowing
-   fill that animates in, and a pin that bounces + pings like a
-   live map marker. The whole bar tilts slightly on hover for a
-   touch of 3D depth, same spirit as the product image tilt on
-   the single-product page.
-   =========================================================== */
 .tracking-progress {
   flex: 0 0 25%;
   min-height: 0;
@@ -257,7 +241,7 @@ body {
 
 @keyframes progress-fill {
   from { width: 0%; }
-  to { width: 50%; }
+  to { width: var(--target-width, 50%) }  
 }
 
 .progress-glow {
@@ -276,8 +260,6 @@ body {
   50% { opacity: 1; }
 }
 
-/* The marker rides at the edge of the fill like a pin on a map -
-   it bounces gently and sends out a soft ring "ping". */
 .progress-marker {
   position: absolute;
   top: 50%;
@@ -291,6 +273,7 @@ body {
   width: 18px;
   height: 18px;
   border-radius: 50%;
+  margin-left: 28px;
 
   background: var(--card-ink);
   border: 3px solid var(--accent);
