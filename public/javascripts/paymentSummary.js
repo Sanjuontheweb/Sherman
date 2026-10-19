@@ -126,7 +126,8 @@ export function renderPaymentSummary() {
           description: product.description,
           keywords : product.keywords,
           quantity: data.quantity,
-          deliveryOptions: getDeliveryOption(data.deliveryOptionId)
+          deliveryOptions: getDeliveryOption(data.deliveryOptionId),
+          seller: product.seller
       }
     })
     

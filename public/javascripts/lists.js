@@ -8,13 +8,9 @@ export function loadFromStorage() {
 if (!list) {
   list = [
     {
-    productId: '0d7f9qha-4efe-4r89-r0ff-ba8363e0a642',
+    productId: '3b7d6jfe-3jdo-7o93-r04c-ba8924h0w851',
     quantity: 2,
     deliveryOptionId: '1'
-  }, {
-    productId: '4d7d7qfa-3tfe-4e48-r06f-ba8353h0w602',
-    quantity: 3,
-    deliveryOptionId: '2'
   }];
   }
 }

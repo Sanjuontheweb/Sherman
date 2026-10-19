@@ -1,6 +1,7 @@
 import express from 'express'
 import path from 'path'
 import dotenv from 'dotenv';
+import accountsRouter from "./server/accounts/accounts.router.js" 
 import productRouter from "./routes/product.js"
 import backendRouter from "./routes/database.js"
 import trackingRouter from "./routes/trackingRoute.js"
@@ -63,6 +64,7 @@ app.get('/404', (req, res) => {
 app.use('/api/data', productRouter)
 app.use('/details', productDetailsRouter)
 app.use('/tracking', trackingRouter)
+app.use('/accounts', accountsRouter);
 
 await connectToMongoDB()
 app.use('/api/backend/orders', backendRouter)

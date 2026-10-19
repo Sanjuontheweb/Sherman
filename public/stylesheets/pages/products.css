@@ -197,12 +197,33 @@ body {
   text-underline-offset: 3px;
 }
 
+.product-seller-title {
+  font-family: var(--font-body);
+  font-weight: 700;
+  font-size: 18px;
+  color: var(--accent);
+  
+  margin-top: 4px;
+  margin-bottom: 9px;
+}
+
+.product-seller {
+  font-family: var(--font-body);
+  font-weight: 400;
+  font-size: 17px;
+  color: rgb(184, 184, 184);
+  
+  margin-top: 4px;
+  margin-bottom: 9px;
+  padding-left: 3px;
+}
+
 .product-keywords {
   font-family: var(--font-body);
   font-weight: 700;
   font-size: 17px;
   color: var(--accent);
-  margin-top: 6px;
+  margin-top: 5px;
   margin-bottom: 3vh;
   cursor: cell;
   padding-right: 2px;

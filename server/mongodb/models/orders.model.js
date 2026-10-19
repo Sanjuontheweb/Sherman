@@ -42,6 +42,10 @@ const OrderSchema = mongoose.Schema({
             required: true,
             default: 1,
         },
+        seller: {
+            type: String,
+            required: true
+        },
       }
     ], total: Number},
 {

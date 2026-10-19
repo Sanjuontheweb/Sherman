@@ -1,5 +1,5 @@
 const products = [
-    {
+  {
     id: "0d7f9qha-4efe-4r89-r0ff-ba8363e0a642",
     image: "/images/products/retro_speaker.png",
     name: "Retro Bluetooth Speaker with Pixel Display",
@@ -14,6 +14,7 @@ const products = [
       "Pixelated",
       "Beats"
     ],
+    seller: "BigSmall"
   },
   {
     id: "4d7d7qfa-3tfe-4e48-r06f-ba8353h0w602",
@@ -29,7 +30,8 @@ const products = [
       "poster",
       "Anime",
       "Elevating"
-    ]
+    ],
+    seller: "Tammannah B"
   },
   {
     id: "3n6d6kfs-3jod-7o90-f72d-ba0724x0w881",
@@ -46,7 +48,8 @@ const products = [
       "Anime",
       "flying",
       "kurama"
-    ]
+    ],
+    seller: "Offo"
   },
   {
     id: "6d1d7jal-3cqu-3i27-z04b-mh8734h5e385",
@@ -62,7 +65,8 @@ const products = [
       "Delicious",
       "Explosion",
       "un-stoppable"
-    ]
+    ],
+    seller: "Kumara"
   },
   {
     id: "83d4ca15-0f35-48f5-b7a3-1ea210004f2e",
@@ -79,6 +83,7 @@ const products = [
       "Sphere",
       "unstoppableBeats"
     ],
+    seller: "Banapoy"
   },
   {
     id: "54e0eccd-8f36-462b-b68a-8182611d9add",
@@ -94,7 +99,8 @@ const products = [
       "Lampy",
       "LampLighty",
       "ziggy-zaggy-btch"
-    ]
+    ],
+    seller: "Devansh"
   },
   {
     id: "3ebe75dc-64d2-4137-8860-1f5a963e534b",
@@ -110,7 +116,8 @@ const products = [
       "Revolutionary",
       "First-Ever",
       "Market-Leading-AI"
-    ]
+    ],
+    seller: "Rabbit"
   },
   {
     id: "8c9c52b5-5a19-4bcb-a5d1-158a74287c53",
@@ -126,7 +133,8 @@ const products = [
       "Stabalizing",
       "NotCold",
       "Hi-Fi"
-    ]
+    ],
+    seller: "IKEA"
   },
   {
     id: "dd82ca78-a18b-4e2a-9250-31e67412f98d",
@@ -143,6 +151,7 @@ const products = [
       "Future",
       "noCats"
     ],
+    seller: "AM Infinity"
   },
   {
     id: "3b7d6jfe-3jdo-7o93-r04c-ba8924h0w851",
@@ -159,7 +168,8 @@ const products = [
       "Stinger",
       "Nerve-bending",
       "Bye-byeWallet"
-    ]
+    ],
+    seller: "Cluvens"
   },
   {
     id: "77919bbe-0e56-475b-adde-4f24dfed3a04",
@@ -177,7 +187,8 @@ const products = [
       "restroom",
       "everywhere",
       "statuous"
-    ]
+    ],
+    seller: "Balen"
   },
   {
     id: "58b4fc92-e98c-42aa-8c55-b6b79996769a",
@@ -193,7 +204,8 @@ const products = [
       "swiss",
       "intricate",
       "status through the roof"
-    ]
+    ],
+    seller: "Pierre"
   },
   {
     id: "5968897c-4d27-4872-89f6-5bcb052746d7",
@@ -213,7 +225,8 @@ const products = [
       "apparel"
     ],
     type: "clothing",
-    sizeChartLink: "images/clothing-size-chart.jpg"
+    sizeChartLink: "images/clothing-size-chart.jpg",
+    seller: "Tivante"
   },
   {
     id: "aad29d11-ea98-41ee-9285-b916638cac4a",
@@ -228,7 +241,8 @@ const products = [
     keywords: [
       "modern",
       "stylish"
-    ]
+    ],
+    seller: "Equivoyage"
   },
   {
     id: "82bb68d7-ebc9-476a-989c-c78a40ee5cd9",
@@ -244,7 +258,8 @@ const products = [
       "Anime",
       "Showpiece",
       "mens"
-    ]
+    ],
+    seller: "Natalie"
   }
 ]
 export default products

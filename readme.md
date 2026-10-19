@@ -1,0 +1,1 @@
+It should first connect to a mongodb cluster, for the app to start working.

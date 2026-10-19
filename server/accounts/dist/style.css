@@ -1,0 +1,439 @@
+* {
+    box-sizing: border-box;
+    padding: 0;
+    margin: 0;
+    transition-duration: 230ms;
+}
+
+:root {
+    --bg-start: #2a0710;
+    --bg-end: #180307;
+    --card: #22060c;
+    --ink: #f3e6d8;
+    --muted: #b79c8c;
+    --line: #5a3028;
+    --accent: #ff7a5c;
+    --accent-deep: #c8432e;
+    --on-accent: #180307;
+}
+
+html {
+    font-family: "Bitcount Prop Single Ink", system-ui;
+}
+
+body {
+    background: linear-gradient(to left, var(--bg-start), var(--bg-end));
+    color: var(--ink);
+    min-height: 100vh;
+    margin: 0;
+}
+
+.mainContainer {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    gap: 24px;
+    padding: 24px;
+    width: 100%;
+    max-width: 1000px;
+    margin: 0 auto;
+    font-family: "Nunito", system-ui;
+}
+
+.mainContainer > div {
+    display: flex;
+    flex: 1;
+    width: 100%;
+}
+
+.headerContainer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.headerContainer h1 {
+    font-weight: 800;
+}
+
+.headerBtns {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+}
+
+.headerContainer button {
+    background: var(--card);
+    color: var(--ink);
+    padding: 10px 18px;
+    border: 1px solid var(--line);
+    border-radius: 8px;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    cursor: pointer;
+}
+
+.headerContainer button:hover {
+    background: var(--accent);
+    color: var(--on-accent);
+    border-color: var(--accent);
+}
+
+main {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    flex: 1;
+}
+
+.todo {
+    border-left: 2px solid var(--accent);
+    padding: 8px 14px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.actions {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    font-size: 1.1rem;
+}
+
+.actions i {
+    cursor: pointer;
+}
+
+.actions i:hover {
+    color: var(--accent);
+}
+
+.enterTodo {
+    display: flex;
+    align-items: stretch;
+    border: 1px solid var(--line);
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+.errorBordr {
+    border-color: var(--accent-deep) !important;
+}
+
+.enterTodo input {
+    background: transparent;
+    border: none;
+    padding: 14px;
+    color: var(--ink);
+    flex: 1;
+}
+
+.enterTodo input:focus {
+    outline: none;
+}
+
+.enterTodo button {
+    padding: 0 22px;
+    background: var(--card);
+    color: var(--ink);
+    border: none;
+    font-weight: 800;
+    font-size: 13px;
+    cursor: pointer;
+}
+
+.enterTodo button:hover {
+    background: transparent;
+    color: var(--accent);
+}
+
+.pageLoad {
+    display: flex;
+    position: absolute;
+    top: 45%;
+    left: 48%;
+    font-size: 2rem;
+    animation: spiral 2s linear infinite;
+}
+
+/* --- Authentication Styles --- */
+.authContainer {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    flex: 1;
+    padding: 22px;
+}
+
+.authContainer::before {
+    content: "";
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 520px;
+    max-width: 90vw;
+    height: 420px;
+    transform: translate(-50%, -50%);
+    background: radial-gradient(ellipse, color-mix(in srgb, var(--accent) 16%, transparent), transparent 70%);
+    pointer-events: none;
+    z-index: 0;
+}
+
+form {
+    position: relative;
+    z-index: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+form,
+.options {
+    width: 400px;
+    max-width: 100%;
+    margin: 0 auto;
+}
+
+form input {
+    width: 100%;
+    border: none;
+    background: transparent;
+    color: var(--ink);
+    padding: 11px 14px;
+    font-size: 15px;
+}
+
+form input:focus {
+    outline: none;
+}
+
+h1 {
+    position: relative;
+    text-align: center;
+    font-size: 50px;
+    font-weight: 100;
+    font-family: "Bitcount Prop Single Ink", system-ui;
+    color: var(--accent);
+    padding-bottom: 18px;
+}
+
+h1::after {
+    content: "";
+    position: absolute;
+    left: 50%;
+    bottom: 0;
+    width: 46px;
+    height: 2px;
+    background-color: var(--accent);
+    transform: translateX(-50%);
+    animation: underline-breathe 2.6s ease-in-out infinite;
+}
+
+form label {
+    position: relative;
+    border: 1px solid var(--line);
+    border-radius: 5px;
+    transition: border-color 150ms ease, box-shadow 150ms ease;
+}
+
+form label:focus-within {
+    border-color: var(--accent);
+    box-shadow: 0 0 0 3px color-mix(in srgb, var(--accent) 22%, transparent);
+}
+
+form button {
+    position: relative;
+    overflow: hidden;
+
+    background: var(--accent);
+    font-size: 1rem;
+    font-weight: bolder;
+    letter-spacing: 0.03em;
+    text-transform: uppercase;
+    color: var(--on-accent);
+    border: none;
+    padding: 11px 0;
+    border-radius: 5px;
+    cursor: pointer;
+    display: grid;
+    place-items: center;
+}
+
+form button:hover {
+    background: var(--accent-deep);
+    color: var(--ink);
+}
+
+form button::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: -60%;
+    width: 40%;
+    height: 100%;
+    background: linear-gradient(115deg, transparent, rgba(255, 255, 255, 0.5), transparent);
+    transform: skewX(-20deg);
+}
+
+form button:hover::after {
+    animation: shimmer-sweep 0.9s ease;
+}
+
+.role-selector {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    margin-top: 5px;
+    margin-bottom: 5px;
+}
+
+form .role-selector label.radio-label {
+    border: none;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    color: var(--ink);
+    font-family: "Nunito", system-ui;
+    font-size: 15px;
+    cursor: pointer;
+}
+
+form .role-selector input[type="radio"] {
+    width: auto;
+    padding: 0;
+    background: transparent;
+    cursor: pointer;
+    accent-color: var(--accent);
+}
+
+.above,
+.center {
+    position: absolute;
+    transform: translate(-10%);
+    pointer-events: none;
+    color: var(--ink);
+    border-radius: 4px;
+    padding: 0 6px;
+    font-size: 0.85rem;
+    font-family: "Nunito", system-ui;
+    transition-duration: 150ms;
+}
+
+.above {
+    top: -10px;
+    left: 24px;
+    background: var(--card);
+    border: 1px solid var(--line);
+    border-radius: 8px;
+    font-size: 0.8rem;
+}
+
+.center {
+    top: 50%;
+    left: 6px;
+    border: 1px solid transparent;
+    opacity: 0;
+}
+
+.error {
+    color: var(--accent);
+    font-size: 1rem;
+    font-family: "Nunito", system-ui;
+    text-align: center;
+}
+
+.options {
+    position: relative;
+    z-index: 1;
+    padding: 14px 0;
+    overflow: hidden;
+    font-size: 0.9rem;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.options > p {
+    position: relative;
+    text-align: center;
+    width: fit-content;
+    margin: 0 auto;
+    padding: 0 10px;
+    font-size: 20px;
+}
+
+.options > p::after,
+.options > p::before {
+    position: absolute;
+    content: "";
+    top: 50%;
+    transform: translateY(-50%);
+    width: 100vw;
+    height: 1.5px;
+    background: var(--line);
+}
+
+.options > p::after {
+    right: 100%;
+}
+
+.options > p::before {
+    left: 100%;
+}
+
+.options div {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-family: "Nunito", system-ui;
+    justify-content: center;
+    font-weight: bolder;
+}
+
+.options div p:last-of-type {
+    font-family: "Nunito", system-ui;
+    color: var(--accent);
+    cursor: pointer;
+}
+
+.spur {
+    animation: spiral 2s linear infinite;
+}
+
+@keyframes spiral {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+}
+
+@keyframes underline-breathe {
+    0%, 100% { width: 46px; opacity: 0.55; }
+    50% { width: 70px; opacity: 1; }
+}
+
+@keyframes shimmer-sweep {
+    from { left: -60%; }
+    to { left: 130%; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .pageLoad,
+    .spur {
+        animation: none;
+    }
+
+    h1::after {
+        animation: none;
+    }
+
+    form button:hover::after {
+        animation: none;
+    }
+}
