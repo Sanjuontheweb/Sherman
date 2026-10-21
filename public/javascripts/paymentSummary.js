@@ -125,9 +125,9 @@ export function renderPaymentSummary() {
           price: product.price,
           description: product.description,
           keywords : product.keywords,
+          seller: product.seller,
           quantity: data.quantity,
           deliveryOptions: getDeliveryOption(data.deliveryOptionId),
-          seller: product.seller
       }
     })
     
@@ -153,6 +153,6 @@ export function renderPaymentSummary() {
     console.log("Ofc it's an error and u dont know what went wrong , Go bang ur head. Here's the actual error tho: \n", error);
   }
 
-  window.location.href = 'orders';
+  // window.location.href = 'orders';
  });
 };

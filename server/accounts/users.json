@@ -1,0 +1,20 @@
+[
+    {
+        "uid": "TDYecqVADbhEJkasaDJ1cFEEVrG3",
+        "username": "admin",
+        "email": "admin@gmail.com",
+        "role": "admin"
+    },
+    {
+        "uid": "ACnkoCG1F8fFVEZjl9Mxo86UkdB2",
+        "username": "pengu",
+        "email": "pengu@gmail.com",
+        "role": "seller"
+    },
+    {
+        "uid": "n21CwOZ55AWh97WGO9opaJC9dn63",
+        "username": "customer",
+        "email": "customer@gmail.com",
+        "role": "customer"
+    }
+]

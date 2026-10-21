@@ -10,16 +10,46 @@ export class AuthenticateComponent {
     emailInput;
     passwordInput;
     confirmPassInput;
-    errorContainer;
-    titleElement;
     submitBtn;
-    toggleText;
     constructor(parent) {
         this.container = document.createElement('div');
         this.container.className = 'authContainer';
         this.render();
         parent.appendChild(this.container);
         window.addEventListener('keydown', this.handleKeys.bind(this));
+    }
+    getSelectedRole() {
+        if (!this.register)
+            return "";
+        const checked = this.container.querySelector('input[name="role"]:checked');
+        return checked ? checked.value : "customer";
+    }
+    async handleRedirection() {
+        if (this.email === 'admin@gmail.com') {
+            window.location.href = "/"; // Send Admin to root
+            return;
+        }
+        try {
+            // Check users.json via Express API for the user's role
+            const res = await fetch(`/accounts/api/users/${this.email}`);
+            if (res.ok) {
+                const data = await res.json();
+                const role = data.role;
+                if (role) {
+                    localStorage.setItem('user_role', role);
+                }
+                // Store role locally to enforce route locks
+                localStorage.setItem('user_role', data.role);
+                if (role === 'seller') {
+                    window.location.href = "/accounts/seller/dashboard"; // Seller dashboard
+                    return;
+                }
+            }
+        }
+        catch (err) {
+            console.error("Error fetching role:", err);
+        }
+        window.location.href = "/"; // Customers go to root
     }
     async handleAuthenticate() {
         if (this.authenticating)
@@ -34,11 +64,33 @@ export class AuthenticateComponent {
         try {
             if (!this.register) {
                 await authHandlers.login(this.email, this.password);
+                await this.handleRedirection();
             }
             else {
+                if (this.email === 'admin@gmail.com') {
+                    throw new Error("Admin already exists");
+                }
                 await authHandlers.signup(this.email, this.password);
+                // Get the newly generated UID from Firebase
+                const { auth } = await import('../lib/firebase/firebase.js');
+                const user = auth.currentUser;
+                if (user) {
+                    const username = this.email.split('@')[0];
+                    const role = this.getSelectedRole();
+                    // Post details to Express server to save in users.json
+                    await fetch('/accounts/api/users', {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({
+                            uid: user.uid,
+                            username: username,
+                            email: this.email,
+                            role: role
+                        })
+                    });
+                }
+                await this.handleRedirection();
             }
-            window.location.href = "/";
         }
         catch (error) {
             console.error(error);
@@ -73,8 +125,8 @@ export class AuthenticateComponent {
                 <label>
                     <p id="confirm-label-p" class="${this.confirmPass ? 'above' : 'center'}">Confirm Password</p>
                     <input id="confirm-input" type="password" placeholder="Confirm password" value="${this.confirmPass}" />
-                </label>` : ''}
-
+                </label>
+                
                 <div class="role-selector">
                     <label class="radio-label">
                         <input type="radio" name="role" value="customer" checked />
@@ -85,6 +137,7 @@ export class AuthenticateComponent {
                         Seller
                     </label>
                 </div>
+                ` : ''}
 
                 <button id="submit-btn" type="button" class="submitBtn">
                     ${this.authenticating ? '<i class="fa-solid fa-spiral spur"></i>' : 'Submit'}
@@ -138,12 +191,10 @@ export class AuthenticateComponent {
     }
     updateView() {
         const errDiv = this.container.querySelector('#error-container');
-        if (errDiv) {
+        if (errDiv)
             errDiv.innerHTML = this.error ? `<p class="error">The info you have entered is incorrect</p>` : '';
-        }
-        if (this.submitBtn) {
+        if (this.submitBtn)
             this.submitBtn.innerHTML = this.authenticating ? '<i class="fa-solid fa-spiral spur"></i>' : 'Submit';
-        }
     }
 }
 //# sourceMappingURL=Authenticate.js.map

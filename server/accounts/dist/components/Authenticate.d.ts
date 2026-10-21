@@ -9,11 +9,10 @@ export declare class AuthenticateComponent {
     private emailInput;
     private passwordInput;
     private confirmPassInput;
-    private errorContainer;
-    private titleElement;
     private submitBtn;
-    private toggleText;
     constructor(parent: HTMLElement);
+    private getSelectedRole;
+    private handleRedirection;
     private handleAuthenticate;
     private handleRegister;
     private handleKeys;

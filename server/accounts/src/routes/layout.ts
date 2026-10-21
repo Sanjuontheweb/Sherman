@@ -25,19 +25,61 @@ export function initLayout({ childrenRenderer, faviconUrl }: LayoutOptions): HTM
 
     auth.onAuthStateChanged(async (user) => {
         const currentPath = window.location.pathname;
+        let role: string | null = localStorage.getItem('user_role');
 
-        if (user && (currentPath === "/accounts" || currentPath === "/accounts/")) {
-            window.location.href = "/";
+        // 1. Force unauthenticated users to the login page (Fixes the '/' landing issue)
+        if (!user) {
+            localStorage.removeItem('user_role'); // Clean up stale data
+            authStore.update((curr: any) => ({ ...curr, user: null, loading: false }));
+            
+            // Redirect anyone who isn't on the accounts page
+            if (currentPath !== "/accounts" && currentPath !== "/accounts/") {
+                window.location.href = "/accounts/";
+            }
             return;
         }
 
-        if (!user) {
-            authStore.update((curr: any) => ({
-                ...curr,
-                user: null,
-                loading: false
-            }));
-            return;
+        // 2. Fetch role if not in localStorage (Fixes role missing on page refresh/auto-login)
+            if (!role && user.email) {
+                try {
+                    const res = await fetch(`/accounts/api/users/${user.email}`);
+                    if (res.ok) {
+                        const data = await res.json();
+                        role = data.role as string; 
+                        
+                        if (role) {
+                            // TS now knows 'role' is strictly a string here
+                            localStorage.setItem('user_role', role);
+                        }
+                    }
+            } catch (err) {
+                console.error("Error fetching role:", err);
+            }
+        }
+
+        const isAccountsLogin = currentPath === "/accounts" || currentPath === "/accounts/";
+        const isSellerDash = currentPath === "/accounts/seller/dashboard" || currentPath === "/accounts/seller/dashboard/";
+
+        if (role === 'admin') {
+            // Admins can go anywhere. Just keep them off the login page.
+            if (isAccountsLogin) {
+                window.location.href = "/";
+                return;
+            }
+        } 
+        else if (role === 'seller') {
+            // Sellers are ONLY allowed on the seller dashboard.
+            if (!isSellerDash) {
+                window.location.href = "/accounts/seller/dashboard";
+                return;
+            }
+        } 
+        else {
+            // Customers cannot access the login page OR the seller dashboard.
+            if (isAccountsLogin || isSellerDash) {
+                window.location.href = "/";
+                return;
+            }
         }
 
         let dataToSetToStore;

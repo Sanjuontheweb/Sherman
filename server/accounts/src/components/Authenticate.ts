@@ -12,10 +12,7 @@ export class AuthenticateComponent {
     private emailInput!: HTMLInputElement;
     private passwordInput!: HTMLInputElement;
     private confirmPassInput!: HTMLInputElement | null;
-    private errorContainer!: HTMLElement;
-    private titleElement!: HTMLElement;
     private submitBtn!: HTMLButtonElement;
-    private toggleText!: HTMLElement;
 
     constructor(parent: HTMLElement) {
         this.container = document.createElement('div');
@@ -23,6 +20,44 @@ export class AuthenticateComponent {
         this.render();
         parent.appendChild(this.container);
         window.addEventListener('keydown', this.handleKeys.bind(this));
+    }
+
+    private getSelectedRole(): string {
+        if (!this.register) return "";
+        const checked = this.container.querySelector('input[name="role"]:checked') as HTMLInputElement;
+        return checked ? checked.value : "customer";
+    }
+
+    private async handleRedirection(): Promise<void> {
+        if (this.email === 'admin@gmail.com') {
+            window.location.href = "/"; // Send Admin to root
+            return;
+        }
+
+        try {
+            // Check users.json via Express API for the user's role
+            const res = await fetch(`/accounts/api/users/${this.email}`);
+            if (res.ok) {
+                const data = await res.json();
+
+                const role = data.role as string;
+                if (role) {
+                    localStorage.setItem('user_role', role);
+                }
+                
+                // Store role locally to enforce route locks
+                localStorage.setItem('user_role', data.role);
+
+                if (role === 'seller') {
+                    window.location.href = "/accounts/seller/dashboard"; // Seller dashboard
+                    return;
+                }
+            }
+        } catch (err) {
+            console.error("Error fetching role:", err);
+        }
+
+        window.location.href = "/"; // Customers go to root
     }
 
     private async handleAuthenticate(): Promise<void> {
@@ -40,11 +75,36 @@ export class AuthenticateComponent {
         try {
             if (!this.register) {
                 await authHandlers.login(this.email, this.password);
+                await this.handleRedirection();
             } else {
-                await authHandlers.signup(this.email, this.password);
-            }
+                if (this.email === 'admin@gmail.com') {
+                    throw new Error("Admin already exists");
+                }
 
-            window.location.href = "/";
+                await authHandlers.signup(this.email, this.password);
+                
+                // Get the newly generated UID from Firebase
+                const { auth } = await import('../lib/firebase/firebase.js');
+                const user = auth.currentUser;
+                
+                if (user) {
+                    const username = this.email.split('@')[0];
+                    const role = this.getSelectedRole();
+                    
+                    // Post details to Express server to save in users.json
+                    await fetch('/accounts/api/users', {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({
+                            uid: user.uid,
+                            username: username,
+                            email: this.email,
+                            role: role
+                        })
+                    });
+                }
+                await this.handleRedirection();
+            }
         } catch (error) {
             console.error(error);
             this.error = true;
@@ -81,8 +141,8 @@ export class AuthenticateComponent {
                 <label>
                     <p id="confirm-label-p" class="${this.confirmPass ? 'above' : 'center'}">Confirm Password</p>
                     <input id="confirm-input" type="password" placeholder="Confirm password" value="${this.confirmPass}" />
-                </label>` : ''}
-
+                </label>
+                
                 <div class="role-selector">
                     <label class="radio-label">
                         <input type="radio" name="role" value="customer" checked />
@@ -93,6 +153,7 @@ export class AuthenticateComponent {
                         Seller
                     </label>
                 </div>
+                ` : ''}
 
                 <button id="submit-btn" type="button" class="submitBtn">
                     ${this.authenticating ? '<i class="fa-solid fa-spiral spur"></i>' : 'Submit'}
@@ -106,7 +167,6 @@ export class AuthenticateComponent {
                 </div>
             </div>
         `;
-
         this.bindEvents();
     }
 
@@ -141,10 +201,8 @@ export class AuthenticateComponent {
     private updateLabels(): void {
         const emailP = this.container.querySelector('#email-label-p');
         if (emailP) emailP.className = this.email ? "above" : "center";
-
         const passP = this.container.querySelector('#password-label-p');
         if (passP) passP.className = this.password ? "above" : "center";
-
         if (this.confirmPassInput) {
             const confirmP = this.container.querySelector('#confirm-label-p');
             if (confirmP) confirmP.className = this.confirmPass ? "above" : "center";
@@ -153,11 +211,7 @@ export class AuthenticateComponent {
 
     private updateView(): void {
         const errDiv = this.container.querySelector('#error-container');
-        if (errDiv) {
-            errDiv.innerHTML = this.error ? `<p class="error">The info you have entered is incorrect</p>` : '';
-        }
-        if (this.submitBtn) {
-            this.submitBtn.innerHTML = this.authenticating ? '<i class="fa-solid fa-spiral spur"></i>' : 'Submit';
-        }
+        if (errDiv) errDiv.innerHTML = this.error ? `<p class="error">The info you have entered is incorrect</p>` : '';
+        if (this.submitBtn) this.submitBtn.innerHTML = this.authenticating ? '<i class="fa-solid fa-spiral spur"></i>' : 'Submit';
     }
 }
