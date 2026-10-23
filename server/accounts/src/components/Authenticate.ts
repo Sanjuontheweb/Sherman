@@ -15,6 +15,7 @@ export class AuthenticateComponent {
     private submitBtn!: HTMLButtonElement;
 
     constructor(parent: HTMLElement) {
+        document.title = "Account - Login"
         this.container = document.createElement('div');
         this.container.className = 'authContainer';
         this.render();
@@ -227,7 +228,7 @@ export class AuthenticateComponent {
         if (errDiv) {
          errDiv.innerHTML = this.error ? `<p class="error">The info you have entered is incorrect</p>` : '';
         }    
-        
+
         if (this.submitBtn) {
          this.submitBtn.innerHTML = this.authenticating ? '<i class="fa-solid fa-spiral spur"></i>' : 'Submit';
         }

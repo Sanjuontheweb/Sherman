@@ -1,1 +1,1 @@
-{"version":3,"file":"SellProduct.d.ts","sourceRoot":"","sources":["../../src/components/SellProduct.ts"],"names":[],"mappings":"AAAA,qBAAa,oBAAoB;IAC7B,OAAO,CAAC,SAAS,CAAc;IAE/B,YAAY,MAAM,EAAE,WAAW,EAG9B;YAEa,MAAM;IA2BpB,OAAO,CAAC,UAAU;YAoFJ,aAAa;CAyD9B"}
+{"version":3,"file":"SellProduct.d.ts","sourceRoot":"","sources":["../../src/components/SellProduct.ts"],"names":[],"mappings":"AAAA,qBAAa,oBAAoB;IAC7B,OAAO,CAAC,SAAS,CAAc;IAE/B,YAAY,MAAM,EAAE,WAAW,EAI9B;YAEa,MAAM;IA2BpB,OAAO,CAAC,UAAU;YAoFJ,aAAa;CAyD9B"}

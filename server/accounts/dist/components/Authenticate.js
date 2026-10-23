@@ -12,6 +12,7 @@ export class AuthenticateComponent {
     confirmPassInput;
     submitBtn;
     constructor(parent) {
+        document.title = "Account - Login";
         this.container = document.createElement('div');
         this.container.className = 'authContainer';
         this.render();

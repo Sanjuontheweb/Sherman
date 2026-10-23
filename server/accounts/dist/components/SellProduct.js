@@ -1,6 +1,7 @@
 export class SellProductComponent {
     container;
     constructor(parent) {
+        document.title = "Seller - Product Details";
         this.container = parent;
         this.render();
     }

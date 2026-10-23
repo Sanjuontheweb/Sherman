@@ -6,6 +6,7 @@ export class SellerDashboardComponent {
     private currentIndex: number = 0;
 
     constructor(parent: HTMLElement) {
+        document.title = "Seller Dashboard"
         this.container = document.createElement('div');
         this.container.className = 'mainContainer'; 
         this.render();

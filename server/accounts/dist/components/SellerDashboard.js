@@ -4,6 +4,7 @@ export class SellerDashboardComponent {
     myProducts = []; // Stores this seller's products
     currentIndex = 0;
     constructor(parent) {
+        document.title = "Seller Dashboard";
         this.container = document.createElement('div');
         this.container.className = 'mainContainer';
         this.render();

@@ -2,6 +2,7 @@ export class SellProductComponent {
     private container: HTMLElement;
 
     constructor(parent: HTMLElement) {
+        document.title = "Seller - Product Details"
         this.container = parent
         this.render();
     }
@@ -149,7 +150,7 @@ export class SellProductComponent {
         formData.append('name', productName.value);
         formData.append('price', productPrice.value);
         formData.append('description', productDesc.value);
-        
+
         formData.append('sellerId', currentUid);
         formData.append('seller', sellerName.value);
         formData.append('rating', JSON.stringify({ stars: stars, count: count }));
