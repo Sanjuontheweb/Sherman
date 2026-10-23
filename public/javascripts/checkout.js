@@ -1,8 +1,8 @@
-import {list, removeList, updateDeliveryOptions} from './lists.js';
-import {getProduct} from './products.js'; 
-import dayjs from 'https://unpkg.com/dayjs@1.11.10/esm/index.js';
-import {deliveryOptions, getDeliveryOption} from './deliveryOption.js';
+import {getProduct, Product} from './products.js'; 
 import {renderPaymentSummary} from './paymentSummary.js';
+import dayjs from 'https://unpkg.com/dayjs@1.11.10/esm/index.js';
+import {list, removeList, updateDeliveryOptions} from './lists.js';
+import {deliveryOptions, getDeliveryOption} from './deliveryOption.js';
 import './utilities/lists-oop.js';
 
 export function renderOrdersSummary() {
@@ -11,7 +11,8 @@ export function renderOrdersSummary() {
   list.forEach((item) => {
     const productId = item.productId;
 
-    const mathingProduct = getProduct(productId);
+    const matchingProducts = getProduct(productId);
+    const mathingProduct = new Product(matchingProducts)
 
     const deliveryOptionId = item.deliveryOptionId;
 

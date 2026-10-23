@@ -32,6 +32,13 @@ export function renderPaymentSummary() {
   const discount = pricesArr.discount
   const tax = pricesArr.tax
   const total = pricesArr.total
+
+  const role = localStorage.getItem('user_role')
+  let customerId = '';
+
+  if (role === 'customer') {
+    customerId = localStorage.getItem('uid')
+  }
   
   const paymentSummaryHTML = `
   <div class="payment-summary-title">
@@ -143,7 +150,7 @@ export function renderPaymentSummary() {
         'Content-Type': 'application/json'
       },
       body: JSON.stringify({
-        productObj, total
+        productObj, total, customerId
       })
     })
     
@@ -153,6 +160,6 @@ export function renderPaymentSummary() {
     console.log("Ofc it's an error and u dont know what went wrong , Go bang ur head. Here's the actual error tho: \n", error);
   }
 
-  // window.location.href = 'orders';
+  window.location.href = 'orders';
  });
 };

@@ -137,14 +137,22 @@
 
     <script>
       document.querySelector('.js-theme-toggle').addEventListener('click', function () {
+        
         var root = document.documentElement;
         var current = root.getAttribute('data-theme');
+
         var isDark = current
           ? current === 'dark'
           : window.matchMedia('(prefers-color-scheme: dark)').matches;
+
         var next = isDark ? 'light' : 'dark';
         root.setAttribute('data-theme', next);
-        try { localStorage.setItem('sherman-theme', next); } catch (e) {}
+
+        try { 
+          localStorage.setItem('sherman-theme', next); 
+        } catch (e) {
+          console.error(e)
+        }
       });
     </script>
   </body>

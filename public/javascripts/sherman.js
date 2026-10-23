@@ -24,6 +24,7 @@ document.querySelector('.js-products-grid').innerHTML = productHTML;
 async function logoutUser() {
     const auth = await guardAuth();
     const logoutBtn = document.querySelector('.logout-btn');
+    const emptyList = [];
     
     if (logoutBtn) {
       logoutBtn.addEventListener('click', async () => {
@@ -31,6 +32,7 @@ async function logoutUser() {
         
         try {
             await signOut(auth);
+            localStorage.setItem('list', JSON.stringify(emptyList));
             window.location.href = "/accounts/";
         } catch (error) {
             console.error("Error logging out:", error);
@@ -39,5 +41,4 @@ async function logoutUser() {
     }
 }
 
-// Execute the setup
 logoutUser();

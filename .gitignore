@@ -1,5 +1,5 @@
 node_modules
 testFramework_Jasmine
-sherman
 .env
 notes
+atlas-credentials.env

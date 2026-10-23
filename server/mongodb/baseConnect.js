@@ -5,7 +5,6 @@ import mongoose from 'mongoose';
 dotenv.config({ quiet: true })
 const connect = process.env.MONGO_CONN_STR;
 
-//connecting with mongoclient along with mongoose
 export async function connectToMongoDB() {
   const client = new MongoClient(connect);
   try {

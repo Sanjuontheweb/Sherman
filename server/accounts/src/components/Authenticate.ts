@@ -30,26 +30,29 @@ export class AuthenticateComponent {
 
     private async handleRedirection(): Promise<void> {
         if (this.email === 'admin@gmail.com') {
-            window.location.href = "/"; // Send Admin to root
+            window.location.href = "/";
             return;
         }
 
         try {
-            // Check users.json via Express API for the user's role
             const res = await fetch(`/accounts/api/users/${this.email}`);
             if (res.ok) {
                 const data = await res.json();
-
                 const role = data.role as string;
+                const uid = data.uid as string;
+
                 if (role) {
                     localStorage.setItem('user_role', role);
                 }
+                if (uid) {
+                    localStorage.setItem('uid', uid);
+                }
                 
-                // Store role locally to enforce route locks
                 localStorage.setItem('user_role', data.role);
+                localStorage.setItem('uid', data.uid);
 
                 if (role === 'seller') {
-                    window.location.href = "/accounts/seller/dashboard"; // Seller dashboard
+                    window.location.href = "/accounts/seller/dashboard";
                     return;
                 }
             }
@@ -57,7 +60,7 @@ export class AuthenticateComponent {
             console.error("Error fetching role:", err);
         }
 
-        window.location.href = "/"; // Customers go to root
+        window.location.href = "/";
     }
 
     private async handleAuthenticate(): Promise<void> {
@@ -83,7 +86,6 @@ export class AuthenticateComponent {
 
                 await authHandlers.signup(this.email, this.password);
                 
-                // Get the newly generated UID from Firebase
                 const { auth } = await import('../lib/firebase/firebase.js');
                 const user = auth.currentUser;
                 
@@ -91,10 +93,11 @@ export class AuthenticateComponent {
                     const username = this.email.split('@')[0];
                     const role = this.getSelectedRole();
                     
-                    // Post details to Express server to save in users.json
                     await fetch('/accounts/api/users', {
                         method: 'POST',
-                        headers: { 'Content-Type': 'application/json' },
+                        headers: { 
+                            'Content-Type': 'application/json'
+                        },
                         body: JSON.stringify({
                             uid: user.uid,
                             username: username,
@@ -200,18 +203,33 @@ export class AuthenticateComponent {
 
     private updateLabels(): void {
         const emailP = this.container.querySelector('#email-label-p');
-        if (emailP) emailP.className = this.email ? "above" : "center";
         const passP = this.container.querySelector('#password-label-p');
-        if (passP) passP.className = this.password ? "above" : "center";
+
+        if (emailP) {
+          emailP.className = this.email ? "above" : "center";
+        }  
+
+        if (passP) {
+          passP.className = this.password ? "above" : "center";
+        }    
+
         if (this.confirmPassInput) {
             const confirmP = this.container.querySelector('#confirm-label-p');
-            if (confirmP) confirmP.className = this.confirmPass ? "above" : "center";
+
+            if (confirmP) {
+                  confirmP.className = this.confirmPass ? "above" : "center";
+            }
         }
     }
 
     private updateView(): void {
         const errDiv = this.container.querySelector('#error-container');
-        if (errDiv) errDiv.innerHTML = this.error ? `<p class="error">The info you have entered is incorrect</p>` : '';
-        if (this.submitBtn) this.submitBtn.innerHTML = this.authenticating ? '<i class="fa-solid fa-spiral spur"></i>' : 'Submit';
+        if (errDiv) {
+         errDiv.innerHTML = this.error ? `<p class="error">The info you have entered is incorrect</p>` : '';
+        }    
+        
+        if (this.submitBtn) {
+         this.submitBtn.innerHTML = this.authenticating ? '<i class="fa-solid fa-spiral spur"></i>' : 'Submit';
+        }
     }
 }

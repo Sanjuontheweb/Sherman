@@ -17,17 +17,20 @@ export async function guardAuth() {
         }
 
         const role = localStorage.getItem('user_role');
+        
+        const isSellProduct = currentPath === "/accounts/seller/sellProduct" || currentPath === "/accounts/seller/sellProduct/";
         const isSellerDash = currentPath === "/accounts/seller/dashboard" || currentPath === "/accounts/seller/dashboard/";
+        const isSellerRoute = isSellerDash || isSellProduct;
 
         if (role === 'admin') {
-            return; // Do nothing, let the admin browse freely
+            return;
         }
 
-        if (role === 'seller' && !isSellerDash) {
+        if (role === 'seller' && !isSellerRoute) {
             window.location.href = "/accounts/seller/dashboard";
         }
         
-        if (role !== 'seller' && role !== 'admin' && isSellerDash) {
+        if (role !== 'seller' && role !== 'admin' && isSellerRoute) {
             window.location.href = "/";
         }
     });

@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="color-scheme" content="light dark">
+    <title>Product Details</title>
+
+    <script>
+      try {
+        var savedTheme = localStorage.getItem('sherman-theme');
+        if (savedTheme) {
+          document.documentElement.setAttribute('data-theme', savedTheme);
+        }
+      } catch (e) {}
+    </script>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Anton&family=Inter:wght@400;500;600;700&family=Fraunces:ital@1&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="product-details.css">
+</head>
+<body>
+    <div class="detailsPage">
+        <span class="glow glow-one" aria-hidden="true"></span>
+        <span class="glow glow-two" aria-hidden="true"></span>
+
+        <div class="detailsCard">
+            <header class="detailsHead">
+                <span class="detailsEyebrow">[ new listing ]</span>
+                <h1 class="detailsTitle">product details</h1>
+            </header>
+
+            <div class="detailsMeter" aria-hidden="true">
+                <div class="meterTrack">
+                    <i class="seg s1"></i><i class="seg s2"></i><i class="seg s3"></i><i class="seg s4"></i><i class="seg s5"></i><i class="seg s6"></i>
+                </div>
+                <div class="meterLabels">
+                    <span>listing progress</span>
+                    <span class="meterCount"></span>
+                </div>
+            </div>
+
+            <form class="detailsForm" id="detailsForm" action="/products" method="POST" enctype="multipart/form-data" novalidate>
+
+                <div class="field">
+                    <label class="fieldLabel" for="sellerName">
+                        <span class="fieldNum">01</span> Seller name
+                    </label>
+                    <input type="text" id="sellerName" name="sellerName" placeholder="Your name or store" autocomplete="name" required>
+                </div>
+
+                <div class="field">
+                    <label class="fieldLabel" for="productName">
+                        <span class="fieldNum">02</span> Product name
+                    </label>
+                    <input type="text" id="productName" name="productName" placeholder="Name" required>
+                </div>
+
+                <div class="field">
+                    <span class="fieldLabel" id="imageLabel">
+                        <span class="fieldNum">03</span> Product image
+                        <span class="fieldHint">.png only</span>
+                    </span>
+                    <label class="dropzone" id="dropzone">
+                        <input type="file" id="productImage" name="productImage" accept=".png,image/png" aria-labelledby="imageLabel" required>
+                        <span class="dropThumb" id="dropThumb">PNG</span>
+
+                        <span class="dropText">
+                            <span class="dropMain" id="dropMain">Click to upload an image</span>
+                            <span class="dropSub" id="dropSub">A transparent .png looks best</span>
+                        </span>
+                        
+                    </label>
+                    <span class="fieldError" id="imageError" role="alert"></span>
+                </div>
+
+                <div class="field">
+                    <label class="fieldLabel" for="productPrice">
+                        <span class="fieldNum">04</span> Product price
+                    </label>
+                    <div class="priceWrap">
+                        <span class="currency">₹</span>
+                        <input type="number" id="productPrice" name="productPrice" placeholder="0.00" min="0.01" step="0.01" inputmode="decimal" required>
+                    </div>
+                </div>
+
+                <div class="field">
+                    <label class="fieldLabel" for="productDescription">
+                        <span class="fieldNum">05</span> Description
+                    </label>
+                    <textarea id="productDescription" name="productDescription" placeholder="Tell buyers what makes it worth owning." required></textarea>
+                </div>
+
+                <div class="field">
+                    <span class="fieldLabel">
+                        <span class="fieldNum">06</span> Keywords
+                        <span class="fieldHint">min 3 &middot; max 7</span>
+                    </span>
+
+                    <div class="keywordGrid" id="keywordGrid">
+                        <div class="keywordItem">
+                            <span class="hash">#</span>
+                            <input type="text" name="keywords[]" class="keywordss" placeholder="keyword" aria-label="Keyword 1" maxlength="24" pattern="[^#\s]+" required>
+                        </div>
+                        <div class="keywordItem">
+                            <span class="hash">#</span>
+                            <input type="text" name="keywords[]" class="keywordss" placeholder="keyword" aria-label="Keyword 2" maxlength="24" pattern="[^#\s]+" required>
+                        </div>
+                        <div class="keywordItem">
+                            <span class="hash">#</span>
+                            <input type="text" name="keywords[]" class="keywordss" placeholder="keyword" aria-label="Keyword 3" maxlength="24" pattern="[^#\s]+" required>
+                        </div>
+                        <div class="keywordItem extra" hidden>
+                            <span class="hash">#</span>
+                            <input type="text" name="keywords[]" class="keywordss" placeholder="keyword" aria-label="Keyword 4" maxlength="24" pattern="[^#\s]+" required disabled>
+                        </div>
+                        <div class="keywordItem extra" hidden>
+                            <span class="hash">#</span>
+                            <input type="text" name="keywords[]" class="keywordss" placeholder="keyword" aria-label="Keyword 5" maxlength="24" pattern="[^#\s]+" required disabled>
+                        </div>
+                        <div class="keywordItem extra" hidden>
+                            <span class="hash">#</span>
+                            <input type="text" name="keywords[]" class="keywordss" placeholder="keyword" aria-label="Keyword 6" maxlength="24" pattern="[^#\s]+" required disabled>
+                        </div>
+                        <div class="keywordItem extra" hidden>
+                            <span class="hash">#</span>
+                            <input type="text" name="keywords[]" class="keywordss" placeholder="keyword" aria-label="Keyword 7" maxlength="24" pattern="[^#\s]+" required disabled>
+                        </div>
+                    </div>
+
+                    <div class="keywordFoot">
+                        <button type="button" class="addKeyword" id="addKeyword" onclick="var h=document.querySelector('#keywordGrid .keywordItem[hidden]');if(h){var i=h.querySelector('input');h.hidden=false;i.disabled=false;i.focus()}">+ add keyword</button>
+                        <button type="button" class="removeKeyword" id="removeKeyword" onclick="var v=document.querySelectorAll('#keywordGrid .keywordItem.extra:not([hidden])');var l=v[v.length-1];if(l){var i=l.querySelector('input');l.hidden=true;i.value='';i.disabled=true}">&minus; remove</button>
+                        <span class="keywordCount"></span>
+                    </div>
+                </div>
+
+                <button type="submit" class="createBtn">Create</button>
+            </form>
+        </div>
+    </div>
+</body>
+</html>

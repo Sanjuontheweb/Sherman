@@ -5,11 +5,13 @@ import { authStore } from '../store/store.js';
 interface LayoutOptions {
     childrenRenderer: () => HTMLElement;
     faviconUrl?: string;
+    className?: string;
 }
 
-export function initLayout({ childrenRenderer, faviconUrl }: LayoutOptions): HTMLElement {
+export function initLayout({ childrenRenderer, faviconUrl, className }: LayoutOptions): HTMLElement {
     if (faviconUrl) {
         let link: HTMLLinkElement | null = document.querySelector("link[rel*='icon']");
+
         if (!link) {
             link = document.createElement('link');
             link.rel = 'icon';
@@ -20,63 +22,67 @@ export function initLayout({ childrenRenderer, faviconUrl }: LayoutOptions): HTM
     }
 
     const mainContainer = document.createElement('div');
-    mainContainer.className = 'mainContainer';
+
+    mainContainer.className = className !== undefined ? className : 'mainContainer';
     mainContainer.appendChild(childrenRenderer());
 
     auth.onAuthStateChanged(async (user) => {
         const currentPath = window.location.pathname;
         let role: string | null = localStorage.getItem('user_role');
+        let uid: string | null = localStorage.getItem('uid');
 
-        // 1. Force unauthenticated users to the login page (Fixes the '/' landing issue)
         if (!user) {
-            localStorage.removeItem('user_role'); // Clean up stale data
+            localStorage.removeItem('user_role');
+            localStorage.removeItem('uid');
             authStore.update((curr: any) => ({ ...curr, user: null, loading: false }));
             
-            // Redirect anyone who isn't on the accounts page
             if (currentPath !== "/accounts" && currentPath !== "/accounts/") {
                 window.location.href = "/accounts/";
             }
+
             return;
         }
 
-        // 2. Fetch role if not in localStorage (Fixes role missing on page refresh/auto-login)
-            if (!role && user.email) {
-                try {
-                    const res = await fetch(`/accounts/api/users/${user.email}`);
-                    if (res.ok) {
-                        const data = await res.json();
-                        role = data.role as string; 
-                        
-                        if (role) {
-                            // TS now knows 'role' is strictly a string here
-                            localStorage.setItem('user_role', role);
-                        }
+        if (!role && user.email) {
+            try {
+                const res = await fetch(`/accounts/api/users/${user.email}`);
+                if (res.ok) {
+                    const data = await res.json();
+                    role = data.role as string;
+                    uid = data.uid as string; 
+                    
+                    if (role) {
+                        localStorage.setItem('user_role', role);
                     }
-            } catch (err) {
-                console.error("Error fetching role:", err);
-            }
+
+                    if (uid) {
+                        localStorage.setItem('uid', uid);
+                    }
+                    }
+        } catch (err) {
+            console.error("Error fetching role & uid:", err);
+        }
         }
 
         const isAccountsLogin = currentPath === "/accounts" || currentPath === "/accounts/";
+        const isSellProduct = currentPath === "/accounts/seller/sellProduct" || currentPath === "/accounts/seller/sellProduct/";
         const isSellerDash = currentPath === "/accounts/seller/dashboard" || currentPath === "/accounts/seller/dashboard/";
+        const isSellerRoute = isSellerDash || isSellProduct;
 
         if (role === 'admin') {
-            // Admins can go anywhere. Just keep them off the login page.
             if (isAccountsLogin) {
                 window.location.href = "/";
                 return;
             }
         } 
         else if (role === 'seller') {
-            // Sellers are ONLY allowed on the seller dashboard.
-            if (!isSellerDash) {
+            if (!isSellerRoute) {
                 window.location.href = "/accounts/seller/dashboard";
                 return;
             }
         } 
         else {
-            // Customers cannot access the login page OR the seller dashboard.
-            if (isAccountsLogin || isSellerDash) {
+            if (isAccountsLogin || isSellerRoute) {
                 window.location.href = "/";
                 return;
             }
@@ -88,6 +94,7 @@ export function initLayout({ childrenRenderer, faviconUrl }: LayoutOptions): HTM
         
         if (!docSnap.exists()) {
             const userRef = doc(db, "users", user.uid);
+            
             dataToSetToStore = {
                 email: user.email,
                 todos: []

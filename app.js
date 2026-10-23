@@ -56,11 +56,15 @@ app.get('/warranty', (req, res) => {
     res.sendFile(path.resolve('public/images/appliance-warranty.png'));
 })
 
+app.get('/favicon.ico', (req, res) => {
+    res.sendFile(path.resolve('public/images/sherman-logo-title.png'));
+})
+
 app.get('/404', (req, res) => {
     res.render('404')
 })
 
-//api routes
+// api routes
 app.use('/api/data', productRouter)
 app.use('/details', productDetailsRouter)
 app.use('/tracking', trackingRouter)
@@ -83,5 +87,3 @@ app.use(function(req, res, next) {
 });
 
 app.listen(port)
-
-// role based access

@@ -28,8 +28,6 @@
   width: 150px;
 }
 
-/* The logo is an inline <svg>, filled with currentColor, so it
-   tracks --ink and needs no light/dark image swap. */
 .sherman-logo.site-logo {
   width: 110px;
   height: auto;

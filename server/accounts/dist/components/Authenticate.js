@@ -26,22 +26,25 @@ export class AuthenticateComponent {
     }
     async handleRedirection() {
         if (this.email === 'admin@gmail.com') {
-            window.location.href = "/"; // Send Admin to root
+            window.location.href = "/";
             return;
         }
         try {
-            // Check users.json via Express API for the user's role
             const res = await fetch(`/accounts/api/users/${this.email}`);
             if (res.ok) {
                 const data = await res.json();
                 const role = data.role;
+                const uid = data.uid;
                 if (role) {
                     localStorage.setItem('user_role', role);
                 }
-                // Store role locally to enforce route locks
+                if (uid) {
+                    localStorage.setItem('uid', uid);
+                }
                 localStorage.setItem('user_role', data.role);
+                localStorage.setItem('uid', data.uid);
                 if (role === 'seller') {
-                    window.location.href = "/accounts/seller/dashboard"; // Seller dashboard
+                    window.location.href = "/accounts/seller/dashboard";
                     return;
                 }
             }
@@ -49,7 +52,7 @@ export class AuthenticateComponent {
         catch (err) {
             console.error("Error fetching role:", err);
         }
-        window.location.href = "/"; // Customers go to root
+        window.location.href = "/";
     }
     async handleAuthenticate() {
         if (this.authenticating)
@@ -71,16 +74,16 @@ export class AuthenticateComponent {
                     throw new Error("Admin already exists");
                 }
                 await authHandlers.signup(this.email, this.password);
-                // Get the newly generated UID from Firebase
                 const { auth } = await import('../lib/firebase/firebase.js');
                 const user = auth.currentUser;
                 if (user) {
                     const username = this.email.split('@')[0];
                     const role = this.getSelectedRole();
-                    // Post details to Express server to save in users.json
                     await fetch('/accounts/api/users', {
                         method: 'POST',
-                        headers: { 'Content-Type': 'application/json' },
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
                         body: JSON.stringify({
                             uid: user.uid,
                             username: username,
@@ -178,23 +181,28 @@ export class AuthenticateComponent {
     }
     updateLabels() {
         const emailP = this.container.querySelector('#email-label-p');
-        if (emailP)
-            emailP.className = this.email ? "above" : "center";
         const passP = this.container.querySelector('#password-label-p');
-        if (passP)
+        if (emailP) {
+            emailP.className = this.email ? "above" : "center";
+        }
+        if (passP) {
             passP.className = this.password ? "above" : "center";
+        }
         if (this.confirmPassInput) {
             const confirmP = this.container.querySelector('#confirm-label-p');
-            if (confirmP)
+            if (confirmP) {
                 confirmP.className = this.confirmPass ? "above" : "center";
+            }
         }
     }
     updateView() {
         const errDiv = this.container.querySelector('#error-container');
-        if (errDiv)
+        if (errDiv) {
             errDiv.innerHTML = this.error ? `<p class="error">The info you have entered is incorrect</p>` : '';
-        if (this.submitBtn)
+        }
+        if (this.submitBtn) {
             this.submitBtn.innerHTML = this.authenticating ? '<i class="fa-solid fa-spiral spur"></i>' : 'Submit';
+        }
     }
 }
 //# sourceMappingURL=Authenticate.js.map

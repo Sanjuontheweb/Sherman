@@ -1,7 +1,7 @@
 import { auth, db } from '../lib/firebase/firebase.js';
 import { doc, getDoc, setDoc } from 'firebase/firestore';
 import { authStore } from '../store/store.js';
-export function initLayout({ childrenRenderer, faviconUrl }) {
+export function initLayout({ childrenRenderer, faviconUrl, className }) {
     if (faviconUrl) {
         let link = document.querySelector("link[rel*='icon']");
         if (!link) {
@@ -13,57 +13,58 @@ export function initLayout({ childrenRenderer, faviconUrl }) {
         link.href = faviconUrl;
     }
     const mainContainer = document.createElement('div');
-    mainContainer.className = 'mainContainer';
+    mainContainer.className = className !== undefined ? className : 'mainContainer';
     mainContainer.appendChild(childrenRenderer());
     auth.onAuthStateChanged(async (user) => {
         const currentPath = window.location.pathname;
         let role = localStorage.getItem('user_role');
-        // 1. Force unauthenticated users to the login page (Fixes the '/' landing issue)
+        let uid = localStorage.getItem('uid');
         if (!user) {
-            localStorage.removeItem('user_role'); // Clean up stale data
+            localStorage.removeItem('user_role');
+            localStorage.removeItem('uid');
             authStore.update((curr) => ({ ...curr, user: null, loading: false }));
-            // Redirect anyone who isn't on the accounts page
             if (currentPath !== "/accounts" && currentPath !== "/accounts/") {
                 window.location.href = "/accounts/";
             }
             return;
         }
-        // 2. Fetch role if not in localStorage (Fixes role missing on page refresh/auto-login)
         if (!role && user.email) {
             try {
                 const res = await fetch(`/accounts/api/users/${user.email}`);
                 if (res.ok) {
                     const data = await res.json();
                     role = data.role;
+                    uid = data.uid;
                     if (role) {
-                        // TS now knows 'role' is strictly a string here
                         localStorage.setItem('user_role', role);
+                    }
+                    if (uid) {
+                        localStorage.setItem('uid', uid);
                     }
                 }
             }
             catch (err) {
-                console.error("Error fetching role:", err);
+                console.error("Error fetching role & uid:", err);
             }
         }
         const isAccountsLogin = currentPath === "/accounts" || currentPath === "/accounts/";
+        const isSellProduct = currentPath === "/accounts/seller/sellProduct" || currentPath === "/accounts/seller/sellProduct/";
         const isSellerDash = currentPath === "/accounts/seller/dashboard" || currentPath === "/accounts/seller/dashboard/";
+        const isSellerRoute = isSellerDash || isSellProduct;
         if (role === 'admin') {
-            // Admins can go anywhere. Just keep them off the login page.
             if (isAccountsLogin) {
                 window.location.href = "/";
                 return;
             }
         }
         else if (role === 'seller') {
-            // Sellers are ONLY allowed on the seller dashboard.
-            if (!isSellerDash) {
+            if (!isSellerRoute) {
                 window.location.href = "/accounts/seller/dashboard";
                 return;
             }
         }
         else {
-            // Customers cannot access the login page OR the seller dashboard.
-            if (isAccountsLogin || isSellerDash) {
+            if (isAccountsLogin || isSellerRoute) {
                 window.location.href = "/";
                 return;
             }

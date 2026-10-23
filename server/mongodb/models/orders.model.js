@@ -47,7 +47,8 @@ const OrderSchema = mongoose.Schema({
             required: false
         },
       }
-    ], total: Number},
+    ], total: Number,
+       customerId: String},
 {
     timestamps: true,
 })

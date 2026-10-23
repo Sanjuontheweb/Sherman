@@ -11,9 +11,18 @@ export async function renderOrders() {
 
   updateListQuantity();
 
+  const role = localStorage.getItem('user_role')
+  let currCustomerId = '';
+
+  if (role === 'customer') {
+    currCustomerId = localStorage.getItem('uid')
+  }
+ 
   const grid = document.querySelector('.js-orders-grid')
 
-  grid.innerHTML = orders.map(order => `
+  grid.innerHTML = orders.map(order => {
+    if (order.customerId === currCustomerId) {
+    return `
     <div class="order-container">
       <div class="order-card-header">
         <div class="order-card-header-left-section">
@@ -68,7 +77,8 @@ export async function renderOrders() {
       `;}).join('')}
       </div>
     </div>
-  `).join('')
+  `;}}
+  ).join('')
 
   document.querySelectorAll('.js-buy-again').forEach((buttonn) => {
     buttonn.addEventListener('click', () => {

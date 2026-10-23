@@ -23,7 +23,9 @@ class VanillaStore {
 
     public subscribe(listener: Listener): () => void {
         this.listeners.add(listener);
+
         listener(this.state);
+        
         return () => {
             this.listeners.delete(listener);
         };
